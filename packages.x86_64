@@ -76,14 +76,9 @@ zsh
 
 
 plasma
-plasma-wayland-session
-kde-applications         
-sddm                      
-xorg-server-xwayland      
-wayland
-mesa
 plasma-desktop
-kwin                     
-networkmanager           
-konsole               
-dolphin   
+kwin
+lightdm
+xorg-xwayland
+networkmanager
+alacritty
