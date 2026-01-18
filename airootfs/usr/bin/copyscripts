@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo "Copying Scripts.."
+
+if cp /usr/bin/installgrub /mnt/usr/bin/installgrub &> /dev/null; then
+    echo "Scripts copied successfully."
+else 
+    echo "Error."
+    exit 1
+fi

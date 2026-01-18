@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+echo "Installing GRUB and EFIBOOTMGR packages..."
+
+if pacman -S --noconfirm grub efibootmgr &> /dev/null; then
+    echo "Packages installed successfully."
+else
+    echo "Error: Pacman failed to install packages. Check your internet connection."
+    exit 1
+fi
+
+echo "Installing GRUB..."
+
+if grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB &> /dev/null; then
+    echo "GRUB installed successfully."
+else
+    echo "Error: GRUB failed to install."
+    exit 1
+fi
+
+echo "Generating Configuration.."
+
+if grub-mkconfig -o /boot/grub/grub.cfg &> /dev/null; then
+    echo "Config generated successfully."
+else 
+    echo "Error: Configuration failed to install."
+    exit1
+fi
