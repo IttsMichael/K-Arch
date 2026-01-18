@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+BOOT_PART="${DISK}/dev/sda1"
+SWAP_PART="${DISK}/dev/sda2"
+ROOT_PART="${DISK}/dev/sda3"
+
+# Mount Root
+echo "Mounting root..."
+mount "$ROOT_PART" /mnt
+echo "Success."
+
+# Mount Boot (Create the directory first)
+echo "Mounting boot..."
+mkdir -p /mnt/boot
+mount "$BOOT_PART" /mnt/boot
+echo "Success."
+
+# Enable Swap
+echo "Enabling swap..."
+swapon "$SWAP_PART"
+echo "Success."
+
+echo "Disk $DISK has been partitioned, formatted, and mounted to /mnt."

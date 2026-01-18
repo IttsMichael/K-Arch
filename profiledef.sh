@@ -27,4 +27,7 @@ file_permissions=(
   ["/usr/local/bin/livecd-sound"]="0:0:755"
   ["/usr/bin/installgrub"]="0:0:755"
   ["/usr/bin/copyscripts"]="0:0:755"
+  ["/usr/bin/partitionscript"]="0:0:755"
+  ["/usr/bin/formatscript"]="0:0:755"
+  ["/usr/bin/mountingscript"]="0:0:755"
 )

@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+# Define partition paths (Adjust if using NVMe)
+echo "Defining partition paths..."
+BOOT_PART="${DISK}/dev/sda1"
+SWAP_PART="${DISK}/dev/sda2"
+ROOT_PART="${DISK}/dev/sda3"
+echo "Success."
+
+# Format partitions
+echo "Formating partitions..."
+mkfs.fat -F 32 "$BOOT_PART"
+mkfs.ext4 -F "$ROOT_PART"
+mkswap "$SWAP_PART"
+echo "Success."
