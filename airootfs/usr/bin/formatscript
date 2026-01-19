@@ -5,10 +5,10 @@ source ./partitionscript
 # Define partition paths (Adjust if using NVMe)
 echo "Defining partition paths..."
 BOOT_PART="${DISK}/dev/sda1" || { echo "Failed to define boot partition"; exit 1; } 
-ROOT_PART="${DISK}/dev/sda3" || { echo "Failed to define root partition"; exit 1; } 
+ROOT_PART="${DISK}/dev/sda2" || { echo "Failed to define root partition"; exit 1; } 
 
 if [ "$swapyn" == "y" ]; then
-    SWAP_PART="${DISK}/dev/sda2" || { echo "Failed to define swap partition"; exit 1; } 
+    SWAP_PART="${DISK}/dev/sda3" || { echo "Failed to define swap partition"; exit 1; } 
 
 echo "Success."
 

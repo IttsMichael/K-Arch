@@ -1,41 +1,20 @@
 #!/usr/bin/env bash
 
-# Define the target drive
 echo "Defining target device..."
 DISK="/dev/sda" || { echo "Faild to find disk."; exit 1; }
 echo "Success."
 
-# 1. Create a new GPT partition table
 echo "Creating partition table..."
 parted -s "$DISK" mklabel gpt || { echo "Faild to create partition table"; exit 1; }
 echo "Success."
 
-# 2. Create UEFI Boot Partition (1GiB)
 echo "Creating UEFI Boot Partition (1GiB)..."
 parted -s "$DISK" mkpart primary fat32 1MiB 1025MiB || { echo "Faild to create UEFI boot partition."; exit 1; }
 parted -s "$DISK" set 1 esp on || { echo "Faild to create UEFI boot partition."; exit 1; }
 echo "Success."
 
-swapstart=1025
+rootstart=1025
 
-# 3. Create Swap Partition
-read -p "Create swap partition? Y/n? " swapyn
-swapyn=${swapyn:-"y"}
-
-if [ "$swapyn" == "y" ]; then
-    while [ -z "$swapsize" ]; do
-        read -p "Define size of swap partition. (In MiB, Minimum 1000) " swapsize
-    done
-
-    echo "Creating Swap Partition ($swapsize)..."
-    parted -s "$DISK" mkpart primary linux-swap "${swapstart}MiB" "$((swapstart + swapsize))MiB"
-    echo "Success."
-fi
-
-# calc start end root
-rootstart=$((swapstart + ${swapsize:-0}))
-
-# 4. root
 read -p "Define size of root partition. (In MiB, 10000 if empty, 10000 minimum) " rootsize
 rootsize=${rootsize:-10000}
 
@@ -45,9 +24,26 @@ while [ "$rootsize" -lt 10000 ]; do
     rootsize=${rootsize:-10000}
 done
 
-
 echo "Creating root partition ($rootsize)..."
-parted -s "$DISK" mkpart primary ext4 "${rootstart}MiB" "$((rootstart + rootsize))MiB"
-
+rootend=$((rootstart + rootsize))
+parted -s "$DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB"
 echo "Success."
-echo "Successfully created UEFI, swap and root partition."
+
+read -p "Create swap partition? Y/n? " swapyn
+swapyn=${swapyn:-"y"}
+
+if [ "$swapyn" == "y" ]; then
+    while [ -z "$swapsize" ]; do
+        read -p "Define size of swap partition. (In MiB, Minimum 1000) " swapsize
+    done
+
+    echo "Creating Swap Partition ($swapsize)..."
+    parted -s "$DISK" mkpart primary linux-swap "${rootend}MiB" "$((rootend + swapsize))MiB"
+    echo "Success."
+fi
+
+echo "Successfully created UEFI, root and swap partition."
+
+export swapyn
+export swapsize
+export rootsize

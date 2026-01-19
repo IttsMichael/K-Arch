@@ -5,10 +5,10 @@ source ./partitionscript
 BOOT_PART="${DISK}/dev/sda1" 
 
 if [ "$swapyn" == "y" ]; then
-    mkswap "$SWAP_PART" || { echo "Failed to format swap partition"; exit 1; } 
+    SWAP_PART="${DISK}/dev/sda3" || { echo "Failed to format swap partition"; exit 1; } 
 fi
 
-ROOT_PART="${DISK}/dev/sda3"
+ROOT_PART="${DISK}/dev/sda2"
 
 # Mount Root
 echo "Mounting root..."
@@ -22,8 +22,11 @@ mount "$BOOT_PART" /mnt/boot
 echo "Success."
 
 # Enable Swap
-echo "Enabling swap..."
-swapon "$SWAP_PART"
-echo "Success."
+if [ "$swapyn" == "y" ]; then
+    echo "Enabling swap..."
+    swapon "$SWAP_PART"
+    echo "Success."
+fi
+
 
 echo "Disk $DISK has been partitioned, formatted, and mounted to /mnt."
