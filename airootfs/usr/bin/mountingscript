@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
 
-BOOT_PART="${DISK}/dev/sda1"
-SWAP_PART="${DISK}/dev/sda2"
+source ./partitionscript
+
+BOOT_PART="${DISK}/dev/sda1" 
+
+if [ "$swapyn" == "y" ]; then
+    mkswap "$SWAP_PART" || { echo "Failed to format swap partition"; exit 1; } 
+fi
+
 ROOT_PART="${DISK}/dev/sda3"
 
 # Mount Root

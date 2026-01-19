@@ -2,27 +2,52 @@
 
 # Define the target drive
 echo "Defining target device..."
-DISK="/dev/sda"
+DISK="/dev/sda" || { echo "Faild to find disk."; exit 1; }
 echo "Success."
 
 # 1. Create a new GPT partition table
 echo "Creating partition table..."
-parted -s "$DISK" mklabel gpt
+parted -s "$DISK" mklabel gpt || { echo "Faild to create partition table"; exit 1; }
 echo "Success."
 
 # 2. Create UEFI Boot Partition (1GiB)
 echo "Creating UEFI Boot Partition (1GiB)..."
-parted -s "$DISK" mkpart primary fat32 1MiB 1025MiB
-parted -s "$DISK" set 1 esp on
+parted -s "$DISK" mkpart primary fat32 1MiB 1025MiB || { echo "Faild to create UEFI boot partition."; exit 1; }
+parted -s "$DISK" set 1 esp on || { echo "Faild to create UEFI boot partition."; exit 1; }
 echo "Success."
 
-# 3. Create Swap Partition (4GB)
-echo "Creating Swap Partition (4GB)..."
-parted -s "$DISK" mkpart primary linux-swap 1025MiB 5121MiB
-echo "Success."
+swapstart=1025
 
-# 4. Create Root Partition (Remaining space)
-echo "Using the remaining space for root partiton.."
-parted -s "$DISK" mkpart primary ext4 5121MiB 100%
+# 3. Create Swap Partition
+read -p "Create swap partition? Y/n? " swapyn
+swapyn=${swapyn:-"y"}
+
+if [ "$swapyn" == "y" ]; then
+    while [ -z "$swapsize" ]; do
+        read -p "Define size of swap partition. (In MiB, Minimum 1000) " swapsize
+    done
+
+    echo "Creating Swap Partition ($swapsize)..."
+    parted -s "$DISK" mkpart primary linux-swap "${swapstart}MiB" "$((swapstart + swapsize))MiB"
+    echo "Success."
+fi
+
+# calc start end root
+rootstart=$((swapstart + ${swapsize:-0}))
+
+# 4. root
+read -p "Define size of root partition. (In MiB, 10000 if empty, 10000 minimum) " rootsize
+rootsize=${rootsize:-10000}
+
+while [ "$rootsize" -lt 10000 ]; do
+    echo "Error: $rootsize is too small. Minimum is 10000."
+    read -p "Define size of root partition: " rootsize
+    rootsize=${rootsize:-10000}
+done
+
+
+echo "Creating root partition ($rootsize)..."
+parted -s "$DISK" mkpart primary ext4 "${rootstart}MiB" "$((rootstart + rootsize))MiB"
+
 echo "Success."
 echo "Successfully created UEFI, swap and root partition."
