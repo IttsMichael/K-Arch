@@ -1,7 +1,15 @@
 #!/usr/bin/env bash
 
 echo "Defining target device..."
-DISK="/dev/sda" || { echo "Faild to find disk."; exit 1; }
+
+# List disks and prompt
+echo "Available disks: (if empty run lsblk)"
+
+lsblk -dn -o NAME,SIZE,MODEL,TYPE | awk '$4=="disk"{print $1, $2, $3}' 
+
+
+read -p "Enter disk (e.g. sda, nvme0n1): " diskname
+DISK="/dev/$diskname"|| { echo "Faild to find disk."; exit 1; }
 echo "Success."
 
 echo "Creating partition table..."
@@ -47,3 +55,11 @@ echo "Successfully created UEFI, root and swap partition."
 export swapyn
 export swapsize
 export rootsize
+
+ENV_FILE="/tmp/partition.env"
+cat > "$ENV_FILE" <<EOF
+export DISK="$DISK"
+export rootsize="$rootsize"
+export swapsize="$swapsize"
+export swapyn="$swapyn"
+EOF

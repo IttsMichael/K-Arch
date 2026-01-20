@@ -1,14 +1,29 @@
 #!/usr/bin/env bash
 
-source ./partitionscript
+ENV_FILE="/tmp/partition.env"
+if [ ! -f "$ENV_FILE" ]; then
+    echo "Missing $ENV_FILE. Run partitionscript first."
+    exit 1
+fi
+source "$ENV_FILE"
 
-BOOT_PART="${DISK}/dev/sda1" 
 
-if [ "$swapyn" == "y" ]; then
-    SWAP_PART="${DISK}/dev/sda3" || { echo "Failed to format swap partition"; exit 1; } 
+echo "Defining partition paths..."
+
+# check last disk digit
+if [[ $DISK =~ [0-9]$ ]]; then
+    PART_SEP="p"
+else
+    PART_SEP=""
 fi
 
-ROOT_PART="${DISK}/dev/sda2"
+BOOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
+ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+
+if [ "$swapyn" == "y" ]; then
+    SWAP_PART="${DISK}${PART_SEP}3" || { echo "Failed to define swap partition"; exit 1; } 
+    echo "Success."
+fi
 
 # Mount Root
 echo "Mounting root..."
