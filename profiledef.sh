@@ -4,12 +4,12 @@
 AIROOTFS_BUILD_HOOKS=(root/custom_hooks/*.sh)
 
 
-iso_name="archlinux"
-iso_label="ARCH_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
-iso_publisher="Arch Linux <https://archlinux.org>"
-iso_application="Arch Linux Live/Rescue DVD"
+iso_name="k-arch"
+iso_label="KARCH_$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y%m)"
+iso_publisher="K-Arch Linux <https://github.com/IttsMichael/K-Arch>"
+iso_application="K-Arch Linux Live/Rescue DVD"
 iso_version="$(date --date="@${SOURCE_DATE_EPOCH:-$(date +%s)}" +%Y.%m.%d)"
-install_dir="arch"
+install_dir="k-arch"
 buildmodes=('iso')
 bootmodes=('bios.syslinux'
            'uefi.systemd-boot')
@@ -30,4 +30,5 @@ file_permissions=(
   ["/usr/bin/partitionscript"]="0:0:755"
   ["/usr/bin/formatscript"]="0:0:755"
   ["/usr/bin/mountingscript"]="0:0:755"
+  ["/usr/local/share/main.py"]="0:0:755"
 )

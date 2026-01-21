@@ -83,3 +83,6 @@ xorg-xwayland
 networkmanager
 alacritty
 firefox
+
+python
+pyside6

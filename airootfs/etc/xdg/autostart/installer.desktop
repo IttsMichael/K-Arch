@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Name=K-Arch Installer
+Exec=/usr/bin/env python /usr/local/share/main.py
+Icon=system-installer
+Terminal=false
+X-KDE-AutostartPhase=1
