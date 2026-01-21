@@ -1,14 +1,24 @@
-#!/usr/bin/env python
-
 import sys
 import os
+import subprocess
 from PySide6.QtWidgets import QApplication, QPushButton
 from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 base_dir = os.path.dirname(os.path.abspath(__file__))
-ui_path = os.path.join(base_dir, "installer.ui")
 
 page = 0
+
+
+disks = []
+for line in subprocess.check_output(["lsblk", "-dn", "-o", "NAME,TYPE"], text = True).splitlines():
+    name, typ = line.split()
+    if typ == "disk":
+        disks.append("/dev/" + name)
+
+def saved():
+    disk = window.comboBox.currentText()
+    with open("./disk.sh", "w") as f:
+        f.write("TARGET_DISK=" + disk + "\n")
 
 def next_clicked():
     print("next was clicked")
@@ -17,17 +27,18 @@ def next_clicked():
     if page == 1:
         page1()
     
-    
 
 def page1():
-    window.head.setText("Partitioning")
-    with open(os.path.join(base_dir, "text", "page1.html"), "r", encoding="utf-8") as f:
-        window.info.setText(f.read())
+    window.stackedWidget.setCurrentIndex(1)
+    window.comboBox.addItems(disks)
+    window.savedisks.clicked.connect(saved)
+
 
 app = QApplication(sys.argv)
 
-file = QFile(ui_path)
+file = QFile("./installer.ui")
 file.open(QFile.ReadOnly)
+
 
 loader = QUiLoader()
 window = loader.load(file)
@@ -37,6 +48,7 @@ next_btn = window.findChild(QPushButton, "nextButton")
 next_btn.clicked.connect(next_clicked)
 
 window.show()
+window.stackedWidget.setCurrentIndex(0)
 sys.exit(app.exec())
 
 
