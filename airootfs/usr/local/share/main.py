@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import sys
 import os
 import subprocess
@@ -36,7 +38,7 @@ def page1():
 
 app = QApplication(sys.argv)
 
-file = QFile("./installer.ui")
+file = QFile(os.path.join(base_dir, "installer.ui"))
 file.open(QFile.ReadOnly)
 
 
