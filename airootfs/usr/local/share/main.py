@@ -33,6 +33,7 @@ for dev in json.loads(datadisk)["blockdevices"]:
 def toggle_swap(enabled: bool):
     window.spinSwap.setEnabled(enabled)
 
+#test
 
 def saved():
     idxdisks = window.comboBox.currentIndex()
