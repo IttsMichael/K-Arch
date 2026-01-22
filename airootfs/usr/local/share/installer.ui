@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -90,8 +90,8 @@ QWidget {
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>180</y>
-       <width>201</width>
+       <y>170</y>
+       <width>361</width>
        <height>41</height>
       </rect>
      </property>
@@ -168,6 +168,73 @@ Make sure you choose the correct device before continuing.
      </property>
      <property name="text">
       <string>&lt;h3&gt;Disk Selection&lt;h3&gt;</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="swapCheck">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>305</y>
+       <width>241</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Create swap partition?           Size:</string>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinRoot">
+     <property name="geometry">
+      <rect>
+       <x>262</x>
+       <y>240</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="suffix">
+      <string> MiB</string>
+     </property>
+     <property name="minimum">
+      <number>10000</number>
+     </property>
+     <property name="maximum">
+      <number>2000000</number>
+     </property>
+    </widget>
+    <widget class="QSpinBox" name="spinSwap">
+     <property name="geometry">
+      <rect>
+       <x>262</x>
+       <y>300</y>
+       <width>101</width>
+       <height>32</height>
+      </rect>
+     </property>
+     <property name="suffix">
+      <string> MiB</string>
+     </property>
+     <property name="minimum">
+      <number>1000</number>
+     </property>
+     <property name="maximum">
+      <number>1000000</number>
+     </property>
+     <property name="value">
+      <number>2048</number>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_2">
+     <property name="geometry">
+      <rect>
+       <x>39</x>
+       <y>246</y>
+       <width>291</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Define size of root partition:</string>
      </property>
     </widget>
    </widget>

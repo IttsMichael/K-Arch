@@ -2,6 +2,7 @@
 
 import sys
 import os
+import json
 import subprocess
 from PySide6.QtWidgets import QApplication, QPushButton
 from PySide6.QtUiTools import QUiLoader
@@ -10,17 +11,44 @@ base_dir = os.path.dirname(os.path.abspath(__file__))
 
 page = 0
 
-
 disks = []
-for line in subprocess.check_output(["lsblk", "-dn", "-o", "NAME,TYPE"], text = True).splitlines():
-    name, typ = line.split()
-    if typ == "disk":
-        disks.append("/dev/" + name)
+
+datadisk = subprocess.check_output(
+    ["lsblk", "-dn", "-o", "NAME,MODEL,SIZE,TYPE", "-J"],
+    text=True
+)
+
+for dev in json.loads(datadisk)["blockdevices"]:
+    if dev ["type"] == "disk":
+        model = dev["model"] or "Unknown device"
+        model = model.replace("_", " ").strip()
+        size = dev["size"]
+        name = dev["name"]
+
+        displaydisk = f"{model} ({size}) - /dev/{name}"
+        pathdisk = f"/dev/{name}"
+
+        disks.append((displaydisk, pathdisk))
+
+def toggle_swap(enabled: bool):
+    window.spinSwap.setEnabled(enabled)
+
 
 def saved():
-    disk = window.comboBox.currentText()
-    with open("./disk.sh", "w") as f:
-        f.write("TARGET_DISK=" + disk + "\n")
+    idxdisks = window.comboBox.currentIndex()
+    pathdisk = disks[idxdisks][1]
+    root_size = window.spinRoot.value()
+    swap_enabled = window.swapCheck.isChecked()
+    swap_size = window.spinSwap.value() if swap_enabled else 0
+    swapyn = "y" if swap_enabled else "n"
+    vars_path = os.path.join(base_dir, "disk.sh")
+    with open(vars_path, "w", encoding="utf-8") as f:
+        f.write(f'TARGET_DISK="{pathdisk}"\n')
+        f.write(f'rootsize="{root_size}"\n')
+        f.write(f'swapyn="{swapyn}"\n')
+        f.write(f'swapsize="{swap_size}"\n')
+        f.write("export TARGET_DISK rootsize swapyn swapsize\n")
+    subprocess.run(["bash", "/usr/local/share/bash/partitionscript"], check=True)
 
 def next_clicked():
     print("next was clicked")
@@ -32,12 +60,11 @@ def next_clicked():
 
 def page1():
     window.stackedWidget.setCurrentIndex(1)
-    window.comboBox.addItems(disks)
+    window.comboBox.addItems(d[0] for d in disks)
     window.savedisks.clicked.connect(saved)
 
 
 app = QApplication(sys.argv)
-
 file = QFile(os.path.join(base_dir, "installer.ui"))
 file.open(QFile.ReadOnly)
 
@@ -46,6 +73,8 @@ loader = QUiLoader()
 window = loader.load(file)
 file.close()
 
+window.swapCheck.toggled.connect(toggle_swap)
+toggle_swap(window.swapCheck.isChecked())
 next_btn = window.findChild(QPushButton, "nextButton")
 next_btn.clicked.connect(next_clicked)
 

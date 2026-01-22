@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+
+BASE_DIR="/usr/local/share"
+VARS_FILE="$BASE_DIR/disk.sh"
+
+if [[ ! -f "$VARS_FILE" ]]; then
+  echo "Missing vars file: $VARS_FILE" >&2
+  exit 1
+fi
+source "$VARS_FILE"
+
+echo "Defining partition paths..."
+
+DISK="$TARGET_DISK"
+
+if [[ $DISK =~ [0-9]$ ]]; then
+    PART_SEP="p"
+else
+    PART_SEP=""
+fi
+
+BOOT_PART="${DISK}${PART_SEP}1"
+
+if [[ "$swapyn" == "y" ]]; then
+    SWAP_PART="${DISK}${PART_SEP}2"
+    ROOT_PART="${DISK}${PART_SEP}3"
+else
+    ROOT_PART="${DISK}${PART_SEP}2"
+fi
+
+
+# Format partitions
+
+if [ "$swapyn" == "y" ]; then
+    mkswap "$SWAP_PART" || { echo "Failed to format swap partition"; exit 1; } 
+fi
+
+echo "Formating partitions..."
+mkfs.fat -F 32 "$BOOT_PART"  || { echo "Failed to format boot partition"; exit 1; } 
+mkfs.ext4 -F "$ROOT_PART"  || { echo "Failed to format root partition"; exit 1; } 
+echo "Success."
+
+bash /usr/local/share/bash/mountingscript || { echo "install_base failed"; exit 1; }

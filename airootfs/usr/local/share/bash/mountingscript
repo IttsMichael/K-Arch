@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+
+BASE_DIR="/usr/local/share"
+VARS_FILE="$BASE_DIR/disk.sh"
+
+if [[ ! -f "$VARS_FILE" ]]; then
+  echo "Missing vars file: $VARS_FILE" >&2
+  exit 1
+fi
+source "$VARS_FILE"
+
+DISK="$TARGET_DISK"
+
+echo "Defining partition paths..."
+
+# check last disk digit
+if [[ $DISK =~ [0-9]$ ]]; then
+    PART_SEP="p"
+else
+    PART_SEP=""
+fi
+
+BOOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
+
+if [ "$swapyn" == "y" ]; then
+    ROOT_PART="${DISK}${PART_SEP}3" || { echo "Failed to define root partition"; exit 1; } 
+    SWAP_PART="${DISK}${PART_SEP}2" || { echo "Failed to define swap partition"; exit 1; } 
+    echo "Success."
+else 
+    ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+fi
+
+# Mount Root
+echo "Mounting root..."
+mount "$ROOT_PART" /mnt
+echo "Success."
+
+# Mount Boot 
+echo "Mounting boot..."
+mkdir -p /mnt/boot
+mount "$BOOT_PART" /mnt/boot
+echo "Success."
+
+# Enable Swap
+if [ "$swapyn" == "y" ]; then
+    echo "Enabling swap..."
+    swapon "$SWAP_PART"
+    echo "Success."
+fi
+
+
+echo "Disk $DISK has been partitioned, formatted, and mounted to /mnt."
