@@ -23,15 +23,15 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>20</x>
        <y>70</y>
-       <width>351</width>
+       <width>331</width>
        <height>251</height>
       </rect>
      </property>
@@ -74,10 +74,10 @@ QWidget {
     <widget class="QLabel" name="label">
      <property name="geometry">
       <rect>
-       <x>40</x>
+       <x>20</x>
        <y>20</y>
-       <width>281</width>
-       <height>31</height>
+       <width>261</width>
+       <height>21</height>
       </rect>
      </property>
      <property name="text">
@@ -86,7 +86,100 @@ QWidget {
     </widget>
    </widget>
    <widget class="QWidget" name="page1">
-    <widget class="QComboBox" name="comboBox">
+    <widget class="QPushButton" name="savetime">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>310</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QPushButton {
+    background-color: #1793D1;
+    color: white;
+    border-radius: 6px;
+    padding: 8px;
+    font-size: 14px;
+}
+QPushButton:hover {
+    background-color: #1fa3e6;
+}
+
+QWidget {
+    background-color: #121212;
+    color: #e0e0e0;
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_4">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>181</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;h3&gt;Region and Timezone&lt;h3&gt;</string>
+     </property>
+    </widget>
+    <widget class="KComboBox" name="comboZone">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>90</y>
+       <width>221</width>
+       <height>32</height>
+      </rect>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>97</y>
+       <width>141</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select your time zone:</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_6">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>190</y>
+       <width>181</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Select your keyboard layout:</string>
+     </property>
+    </widget>
+    <widget class="KComboBox" name="comboLayout">
+     <property name="geometry">
+      <rect>
+       <x>250</x>
+       <y>183</y>
+       <width>221</width>
+       <height>32</height>
+      </rect>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page2">
+    <widget class="QComboBox" name="comboDisk">
      <property name="geometry">
       <rect>
        <x>20</x>
@@ -132,9 +225,9 @@ QWidget {
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
+       <y>50</y>
        <width>441</width>
-       <height>141</height>
+       <height>111</height>
       </rect>
      </property>
      <property name="text">
@@ -162,7 +255,7 @@ Make sure you choose the correct device before continuing.
       <rect>
        <x>20</x>
        <y>20</y>
-       <width>131</width>
+       <width>121</width>
        <height>21</height>
       </rect>
      </property>
@@ -175,7 +268,7 @@ Make sure you choose the correct device before continuing.
       <rect>
        <x>20</x>
        <y>305</y>
-       <width>241</width>
+       <width>231</width>
        <height>22</height>
       </rect>
      </property>
@@ -229,7 +322,7 @@ Make sure you choose the correct device before continuing.
       <rect>
        <x>39</x>
        <y>246</y>
-       <width>291</width>
+       <width>181</width>
        <height>18</height>
       </rect>
      </property>
@@ -240,6 +333,13 @@ Make sure you choose the correct device before continuing.
    </widget>
   </widget>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>KComboBox</class>
+   <extends>QComboBox</extends>
+   <header>kcombobox.h</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>
