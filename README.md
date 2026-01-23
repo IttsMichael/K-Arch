@@ -24,6 +24,8 @@ environment
 
 ## Custom Installer
 
+https://github.com/IttsMichael/K-Arch-Installer
+
 K-Arch ships with a bespoke graphical installer written from scratch.
 
 The installer was designed and implemented entirely in-house:
@@ -42,7 +44,7 @@ This approach keeps the installer flexible, understandable, and fully under the 
 
 Early development
 
-# The installer is NOT complete or suitable for a full installation 
+### The installer is NOT complete or suitable for a full installation 
 
 Expect:
 
@@ -56,36 +58,21 @@ This project is actively evolving and not yet recommended for production systems
 
 ## Licensing & Acknowledgment 
 
-K-Arch is composed of original code as well as software developed by the wider open-source community.
-
 Project Code
+All original code developed specifically for K-Arch—including the custom graphical installer and configuration scripts—is licensed under the [GPL-3.0] as specified in the LICENSE file.
+Upstream & Third-Party Software
+K-Arch is a derivative work that redistributes and integrates third-party open-source software. We extend our gratitude and credit to the following projects:
+The Arch Linux Project: For the robust rolling-release base and package management tooling.
+CachyOS: For the optimized Linux kernel and the high-performance package repositories utilized in this distribution.
+KDE Community: For the Plasma desktop environment and the Qt-based application framework.
+GNU Project & FSF: For the core utilities and essential free software components.
+Licensing & Copyright
+Ownership: Copyright of all third-party components remains with the original authors and contributors.
+Compliance: All software is redistributed under its original license (e.g., GPL, LGPL, MIT, or BSD).
+Source Code: In accordance with the GPL, source code for the kernel and all redistributed packages is available via the upstream Arch Linux and CachyOS mirrors.
 
 All original code developed specifically for this project - including the custom graphical installer and related scripts - is licensed under the terms specified in the project's LICENSE file.
 
-This project's configuration files are licensed under GPL. 
-Individual packages included in the ISO are subject to their own respective licenses from the Arch Linux repositories.
-
-Third-Party Software
-
-K-Arch redistributes and makes use of third-party open-source software, including but not limited to:
-
-The Linux kernel (via the CachyOS kernel)
-
-Arch Linux packages and tooling
-
-KDE Plasma desktop environment
-
-Qt framework
-
-GNU core utilities and other free software
-
-ChatGPT fragen
-
-All third-party components are distributed under their respective licenses.
-
-Ownership and copyright re. uin with their original
-
-authors
 
 ## Built With
 
