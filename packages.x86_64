@@ -27,9 +27,12 @@ iwd
 ldns
 less
 libusb-compat
-linux
+linux-cachyos
+linux-cachyos-headers
 linux-firmware
 linux-firmware-marvell
+cachyos-keyring
+cachyos-mirrorlist
 lsscsi
 lvm2
 man-db

@@ -56,7 +56,7 @@ def savedisk():
         f.write(f'swapyn="{swapyn}"\n')
         f.write(f'swapsize="{swap_size}"\n')
         f.write("export TARGET_DISK rootsize swapyn swapsize\n")
-    # subprocess.run(["bash", "/usr/local/share/bash/partitionscript"], check=True)
+    subprocess.run(["bash", "/usr/local/share/bash/partitionscript"], check=True)
 
 def layout_format():
     window.comboLayout.clear()
