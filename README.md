@@ -1,60 +1,8 @@
-## K-Arch
 
-K-Arch is an independent, Arch-based Linux distribution focused on performance, modern defaults, and a clean user experience.
-
-## Key-Features 
-
-• Fully custom graphical installer
-
-• Designed in Qt
-
-• Installer logic written entirely in Bash and Python
-
-• No third-party installer frameworks
-
-• CachyOS kernel by default for improved responsiveness and performance
-
-• KDE Plasma (Wayland) as the default desktop
-
-environment
-
-• Arch-based rolling release model
-
-• Minimal, transparent system configuration
-
-## Custom Installer
-
-https://github.com/IttsMichael/K-Arch-Installer
-
-K-Arch ships with a bespoke graphical installer written from scratch.
-
-The installer was designed and implemented entirely in-house:
-
-Custom installation flow and UI
-
-Manual control over disk detection, partitioning, and mounting
-
-Explicit package selection and system setup logic
-
-• Direct use of standard Arch tools (pacman, pacstrap, etc.) without relying on existing installer frameworks
-
-This approach keeps the installer flexible, understandable, and fully under the project's control
-
-## Current Status
-
-Early development
 
 ### The installer is NOT complete or suitable for a full installation 
+### Changes are immediate and irreversible
 
-Expect:
-
-Rapid changes
-
-Incomplete features
-
-Occasional breakage
-
-This project is actively evolving and not yet recommended for production systems.
 
 ## Licensing & Acknowledgment 
 
