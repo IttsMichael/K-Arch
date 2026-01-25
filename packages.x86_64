@@ -1,4 +1,5 @@
 alsa-utils
+amd-ucode
 arch-install-scripts
 base
 bolt
@@ -27,12 +28,9 @@ iwd
 ldns
 less
 libusb-compat
-linux-cachyos
-linux-cachyos-headers
+linux
 linux-firmware
 linux-firmware-marvell
-cachyos-keyring
-cachyos-mirrorlist
 lsscsi
 lvm2
 man-db
@@ -77,6 +75,8 @@ xdg-utils
 xfsprogs
 zsh
 
+nvidia-open
+nvidia-utils
 
 plasma
 plasma-desktop
