@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>518</width>
-    <height>382</height>
+    <width>521</width>
+    <height>418</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,12 +18,12 @@
     <rect>
      <x>0</x>
      <y>10</y>
-     <width>511</width>
-     <height>371</height>
+     <width>521</width>
+     <height>411</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>4</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -43,7 +43,7 @@
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
@@ -90,7 +90,7 @@ QWidget {
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
@@ -196,6 +196,19 @@ QWidget {
 </string>
      </property>
     </widget>
+    <widget class="QPushButton" name="back1">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page2">
     <widget class="QComboBox" name="comboDisk">
@@ -212,7 +225,7 @@ QWidget {
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
@@ -347,6 +360,19 @@ Make sure you choose the correct device before continuing.
      </property>
      <property name="text">
       <string>Define size of root partition:</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="back2">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous</string>
      </property>
     </widget>
    </widget>
@@ -500,13 +526,26 @@ QListWidget:disabled {
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
      </property>
      <property name="text">
       <string>Next</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="back3">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous</string>
      </property>
     </widget>
    </widget>
@@ -538,11 +577,11 @@ QListWidget:disabled {
       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You need an internet connection to&lt;/p&gt;&lt;p&gt;download the necessary packages to &lt;/p&gt;&lt;p&gt;complete the installation.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;p&gt;You can't install the system without an &lt;/p&gt;&lt;p&gt;internet connection.&lt;/p&gt;&lt;p&gt;Press next to continue or cancel to retry.&lt;/p&gt;&lt;p&gt;&lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
-    <widget class="QPushButton" name="cancelInternet">
+    <widget class="QPushButton" name="back4">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
@@ -555,7 +594,7 @@ QListWidget:disabled {
      <property name="geometry">
       <rect>
        <x>400</x>
-       <y>310</y>
+       <y>350</y>
        <width>88</width>
        <height>34</height>
       </rect>
@@ -569,14 +608,79 @@ QListWidget:disabled {
     <widget class="QLabel" name="label_11">
      <property name="geometry">
       <rect>
-       <x>70</x>
-       <y>40</y>
-       <width>58</width>
+       <x>20</x>
+       <y>20</y>
+       <width>211</width>
        <height>18</height>
       </rect>
      </property>
      <property name="text">
-      <string>drivers</string>
+      <string>&lt;h3&gt;Driver Selection&lt;h3&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_13">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>100</y>
+       <width>401</width>
+       <height>71</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;We recommend the proprietary drivers for best performance.&lt;/p&gt;&lt;p&gt;Install NVIDIA proprietary drivers?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="yesgpu">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Yes</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="nogpu">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>310</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>No</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="labelGpu">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>351</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>TextLabel</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="back5">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous</string>
      </property>
     </widget>
    </widget>

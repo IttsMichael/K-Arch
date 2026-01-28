@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-
+#a
+import subprocess
 import sys
 import os
 import json
-import subprocess
 import threading
 from style import apply_style
 from PySide6.QtCore import QTimer
@@ -15,12 +15,15 @@ from PySide6.QtCore import Qt
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 
+drivers = " "
 page = 0
 wifi_status = "Disconnected"
 disks = []
 layouts = []
 subprocess.run(["systemctl", "start", "NetworkManager"], check=True)
 connected = False
+gpu_command = ""
+
 
 datadisk = subprocess.check_output(
     ["lsblk", "-dn", "-o", "NAME,MODEL,SIZE,TYPE", "-J"],
@@ -44,6 +47,12 @@ for dev in json.loads(datadisk)["blockdevices"]:
         disks.append((displaydisk, pathdisk))
 
 
+def install():
+    global drivers
+    base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers"]
+    full_command = base_cmd + gpu_command.split()
+    subprocess.run(full_command, check=True)
+
 def toggle_swap(enabled: bool):
     window.spinSwap.setEnabled(enabled)
 
@@ -52,7 +61,6 @@ def toggle_swap(enabled: bool):
 def savedisk():
     
     def run_partition():
-        next_clicked()
         
         idxdisks = window.comboDisk.currentIndex()
         pathdisk = disks[idxdisks][1]
@@ -69,7 +77,21 @@ def savedisk():
                 f.write(f'swapyn="{swapyn}"\n')
                 f.write(f'swapsize="{swap_size}"\n')
                 f.write("export TARGET_DISK rootsize swapyn swapsize\n")
-            # subprocess.run(["bash", "/usr/local/share/bash/partitionscript"], check=True)
+                
+            bash_dir = os.path.join(base_dir, "bash")
+            partition_script = os.path.join(bash_dir, "partitionscript")
+            
+            env = os.environ.copy()
+            env["VARS_FILE"] = vars_path
+            env["BASH_SCRIPTS_DIR"] = bash_dir
+            
+            partition_result = subprocess.run(["bash", partition_script], env=env, capture_output=False, check=False)
+        
+            if partition_result.returncode == 0:
+                install()
+            else:
+                print("Partitioning failed!")
+        
         except subprocess.CalledProcessError as e:
             print(f"Error setting time/layout: {e}")
             
@@ -111,11 +133,25 @@ def save_time():
 
     threading.Thread(target=run_commands, daemon=True).start()
 
-def next_clicked():
+def next_clicked(plus=0):
+    if isinstance(plus, bool):
+        plus = 0
     print("next was clicked")
     global page
-    page += 1
+    page += 1 + plus
     print(page)
+    window.stackedWidget.setCurrentIndex(page)
+    page_turn()
+
+def back(checked=False):
+    print("back was clicked")
+    global page
+    page -= 1
+    print(page)
+    window.stackedWidget.setCurrentIndex(page)
+    page_turn()
+
+def page_turn():
     if page == 1:
         print("page1")
         page1()
@@ -127,14 +163,13 @@ def next_clicked():
         page3()
     elif page == 4:
         print("page4")
-        window.stackedWidget.setCurrentIndex(4)
     elif page == 5:
         print("page5")
         page5()
 
 def on_save_clicked():
     save_time()
-    next_clicked()
+    next_clicked(0)
 
 def disconnect_wifi():
     subprocess.run(
@@ -226,34 +261,25 @@ def toggle_ethernet(enabled = bool):
 def next_internet():
     global connected
     if connected == True:
-        page == 5
-        window.stackedWidget.setCurrentIndex(5)
+        next_clicked(1)
     else:
-        next_clicked()
+        next_clicked(0)
 
-def back_wifi():
-    global page
-    page = 3
-    window.stackedWidget.setCurrentIndex(3)
-        
-
+def install_drivers():
+    global gpu_command
+    global drivers
+    drivers = gpu_command
+    savedisk()
 
 def page1():
     layout_format()
-    window.savetime.clicked.connect(on_save_clicked)
-    window.stackedWidget.setCurrentIndex(1)
-    window.comboZone.addItems(timezones)
-    window.savetime.clicked.connect(save_time)
 
 def page2():
-    window.stackedWidget.setCurrentIndex(2)
-    window.comboDisk.addItems(d[0] for d in disks)
-    window.savedisks.clicked.connect(savedisk)
+    pass
 
 
 def page3():
     global wifi_status
-    window.stackedWidget.setCurrentIndex(3)
     window.wifiList.clear()
     status = subprocess.check_output(
     ["nmcli", "-t", "-f", "STATE", "general"],
@@ -284,8 +310,32 @@ def page3():
         item.setText(text + connected_icon)
         window.wifiList.addItem(item)
 
+
+
 def page5():
-    window.stackedWidget.setCurrentIndex(4)
+    global gpu_command
+
+    gpu_vendor = subprocess.check_output("lspci | grep -E 'VGA|3D'", shell=True, text=True)
+    print(gpu_vendor)
+    
+    if "NVIDIA" in gpu_vendor:
+        gpu_vendor = "An NVIDIA GPU"
+        gpu_command = "nvidia-dkms nvidia-utils lib32-nvidia-utils egl-wayland"
+        window.labelGpu.setText(gpu_vendor + " was detected")
+    elif "AMD" in gpu_vendor:
+        gpu_vendor = "AMD Radeon"
+        gpu_command = "mesa lib32-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver"
+        window.labelGpu.setText(gpu_vendor + " was detected")
+    elif "Intel" in gpu_vendor:
+        gpu_vendor = "Intel Graphics"
+        gpu_command = "mesa vulkan-intel"
+        window.labelGpu.setText(gpu_vendor + " was detected")
+    else:
+        gpu_vendor = "Unknown"
+        gpu_command = "mesa"
+        window.labelGpu.setText("No specific GPU detected.")
+
+    print(gpu_command)
 
 
 
@@ -303,8 +353,13 @@ file.close()
 apply_style(window)
 window.wifiList.itemSelectionChanged.connect(log_item)
 
+window.back1.clicked.connect(back)
+window.back2.clicked.connect(back)
+window.back3.clicked.connect(back)
+window.back5.clicked.connect(back)
+
 window.next4.clicked.connect(next_clicked)
-window.cancelInternet.clicked.connect(back_wifi)
+window.back4.clicked.connect(back)
 window.nextInternet.clicked.connect(next_internet)
 window.connect_button.clicked.connect(connect_wifi)
 window.refreshn.clicked.connect(page3)
@@ -313,9 +368,17 @@ window.ethernetCheck.toggled.connect(toggle_ethernet)
 toggle_swap(window.swapCheck.isChecked())
 next_btn = window.findChild(QPushButton, "nextButton")
 next_btn.clicked.connect(next_clicked)
+window.yesgpu.clicked.connect(install_drivers)
+
+
+window.savetime.clicked.connect(on_save_clicked)
+window.comboZone.addItems(timezones)
+window.comboDisk.addItems(d[0] for d in disks)
+window.savedisks.clicked.connect(next_clicked)
 
 window.show()
 window.stackedWidget.setCurrentIndex(0)
+page_turn() # Ensure first page is initialized
 sys.exit(app.exec())
 
 

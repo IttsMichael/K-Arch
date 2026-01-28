@@ -3,8 +3,11 @@
 echo "Defining target device..."
 
 # List disks and prompt
-BASE_DIR="/usr/local/share"
-VARS_FILE="$BASE_DIR/disk.sh"
+# List disks and prompt
+# Use environment variables passed from Python, or default to standard locations if running standalone (though standalone might fail without vars)
+: "${BASE_DIR:=/usr/local/share}"
+: "${VARS_FILE:=$BASE_DIR/disk.sh}"
+: "${BASH_SCRIPTS_DIR:=$BASE_DIR/bash}"
 
 if [[ ! -f "$VARS_FILE" ]]; then
   echo "Missing vars file: $VARS_FILE" >&2
@@ -42,6 +45,6 @@ echo "Success."
 
 echo "Successfully created UEFI, root and swap partition."
 
-bash /usr/local/share/bash/formatscript || { echo "install_base failed"; exit 1; }
+bash "$BASH_SCRIPTS_DIR/formatscript" || { echo "install_base failed"; exit 1; }
 
 

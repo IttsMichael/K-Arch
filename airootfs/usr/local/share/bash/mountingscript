@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-BASE_DIR="/usr/local/share"
-VARS_FILE="$BASE_DIR/disk.sh"
+# Use environment variables passed from Python/previous script
+: "${BASE_DIR:=/usr/local/share}"
+: "${VARS_FILE:=$BASE_DIR/disk.sh}"
 
 if [[ ! -f "$VARS_FILE" ]]; then
   echo "Missing vars file: $VARS_FILE" >&2

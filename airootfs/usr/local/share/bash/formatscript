@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 
-BASE_DIR="/usr/local/share"
-VARS_FILE="$BASE_DIR/disk.sh"
+# Use environment variables passed from Python/previous script
+: "${BASE_DIR:=/usr/local/share}"
+: "${VARS_FILE:=$BASE_DIR/disk.sh}"
+: "${BASH_SCRIPTS_DIR:=$BASE_DIR/bash}"
 
 if [[ ! -f "$VARS_FILE" ]]; then
   echo "Missing vars file: $VARS_FILE" >&2
@@ -40,4 +42,5 @@ mkfs.fat -F 32 "$BOOT_PART"  || { echo "Failed to format boot partition"; exit 1
 mkfs.ext4 -F "$ROOT_PART"  || { echo "Failed to format root partition"; exit 1; } 
 echo "Success."
 
-bash /usr/local/share/bash/mountingscript || { echo "install_base failed"; exit 1; }
+bash "$BASH_SCRIPTS_DIR/mountingscript" || { echo "install_base failed"; exit 1; }
+#tes
