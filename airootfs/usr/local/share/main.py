@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 #a
 import subprocess
+from uuid import RESERVED_MICROSOFT
+import subprocess
 import sys
 import os
 import json
@@ -23,6 +25,9 @@ layouts = []
 subprocess.run(["systemctl", "start", "NetworkManager"], check=True)
 connected = False
 gpu_command = ""
+user = "root"
+paassword = "root"
+sudo = True
 
 
 datadisk = subprocess.check_output(
@@ -51,7 +56,28 @@ def install():
     global drivers
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers"]
     full_command = base_cmd + gpu_command.split()
-    subprocess.run(full_command, check=True)
+    installation = subprocess.run(full_command, capture_output=False, check=False)
+
+    if installation.returncode == 0:
+        make_user()
+    else:
+        print("Installation Failed!")
+
+def make_user():
+    global user
+    global password
+    root_pass = "root"
+    subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", user], check=True)
+    
+    auth_string = f"{user}:{password}"
+    subprocess.run(
+        ["arch-chroot", "/mnt", "chpasswd"],
+        input=auth_string.encode(), 
+        check=True)
+
+    subprocess.run(["arch-chroot", "/mnt", "chpasswd"], 
+               input=f"root:{root_pass}".encode(), check=True)
+
 
 def toggle_swap(enabled: bool):
     window.spinSwap.setEnabled(enabled)
@@ -93,7 +119,7 @@ def savedisk():
                 print("Partitioning failed!")
         
         except subprocess.CalledProcessError as e:
-            print(f"Error setting time/layout: {e}")
+            print(f"{e}")
             
     threading.Thread(target=run_partition, daemon=True).start()
     
@@ -166,6 +192,11 @@ def page_turn():
     elif page == 5:
         print("page5")
         page5()
+    elif page == 6:
+        print("page6")
+    elif page == 7:
+        print("page7")
+        page7()
 
 def on_save_clicked():
     save_time()
@@ -269,7 +300,28 @@ def install_drivers():
     global gpu_command
     global drivers
     drivers = gpu_command
-    savedisk()
+    next_clicked()
+
+
+def save_user():
+    global user
+    global password
+    usertest = window.userLine.text().strip()
+    passwordtest = window.passLine.text().strip()
+    passconfirm = window.pass2Line.text().strip()
+
+    if not usertest:
+        window.empty.setText("User can't be empty")
+    else:
+        if passwordtest == passconfirm and passwordtest != "":
+            user = usertest
+            password = passwordtest
+            print(user)
+            print(password)
+            next_clicked()
+        else:
+            window.passMis.setText("Password empty or doesn't match")
+
 
 def page1():
     layout_format()
@@ -337,6 +389,17 @@ def page5():
 
     print(gpu_command)
 
+def page7():
+    global user
+    disk_overview = window.comboDisk.currentText()
+    root_size = window.spinRoot.value()
+    print(disk_overview)
+    print(root_size)
+    window.ovDisk.setText("Selected Disk: " + disk_overview)
+    window.ovRoot.setText("Root Size: " + str(root_size) + "MiB")
+    window.ovUser.setText("Useraccount:  " + user)
+
+
 
 
 
@@ -369,6 +432,12 @@ toggle_swap(window.swapCheck.isChecked())
 next_btn = window.findChild(QPushButton, "nextButton")
 next_btn.clicked.connect(next_clicked)
 window.yesgpu.clicked.connect(install_drivers)
+window.nogpu.clicked.connect(next_clicked)
+window.skipLogin.clicked.connect(next_clicked)
+window.previous1.clicked.connect(back)
+window.saveUser.clicked.connect(save_user)
+window.previous2.clicked.connect(back)
+window.installButton.clicked.connect(savedisk)
 
 
 window.savetime.clicked.connect(on_save_clicked)
