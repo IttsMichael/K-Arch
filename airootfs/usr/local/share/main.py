@@ -428,7 +428,7 @@ def page7():
     print(disk_overview)
     print(root_size)
     window.ovDisk.setText("Selected Disk: " + disk_overview)
-    window.ovRoot.setText("Root Size: " + str(root_size) + "MiB")
+    window.ovRoot.setText("Root Size: " + str(root_size) + " MiB")
     window.ovUser.setText("Useraccount:  " + user)
 
 

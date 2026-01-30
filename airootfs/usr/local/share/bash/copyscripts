@@ -1,12 +1,39 @@
 #!/usr/bin/env bash
 
-echo "Copying installer scripts to target..."
-BASH_DIR="$(dirname "$(readlink -f "$0")")"
+set -euo pipefail
 
-mkdir -p /mnt/usr/local/bin
-if cp -r "$BASH_DIR/"* /mnt/usr/local/bin/ && chmod +x /mnt/usr/local/bin/*; then
-    echo "Scripts copied successfully."
-else 
-    echo "Error: Failed to copy scripts."
+echo ">>> Improving system configuration and deploying scripts..."
+
+# Check for root privileges
+if [[ $EUID -ne 0 ]]; then
+   echo "Error: This script must be run as root."
+   exit 1
+fi
+
+# Check if /mnt is a mount point
+if ! mountpoint -q /mnt; then
+    echo "Error: /mnt is not a mount point. Ensure the target disk is mounted."
     exit 1
 fi
+
+BASH_DIR="$(dirname "$(readlink -f "$0")")"
+
+# Deploying scripts with correct permissions
+echo "Copying installer scripts to /mnt/usr/local/bin..."
+mkdir -p /mnt/usr/local/bin
+find "$BASH_DIR" -maxdepth 1 -type f -not -name "copyscripts" -exec install -Dm755 {} /mnt/usr/local/bin/ \;
+
+# Copy core system identifying files
+echo "Deploying system identification files..."
+[[ -f /etc/os-release ]] && cp /etc/os-release.txt /mnt/etc/os-release.txt
+[[ -f /etc/lsb-release ]] && cp /etc/lsb-release.txt /mnt/etc/lsb-release.txt
+[[ -f /etc/lsb-release ]] && cp /grub/grub.cfg /mnt/boot/grub/grub.cfg
+
+# Fastfetch configuration
+if [[ -f /etc/fastfetch/config.jsonc ]]; then
+    echo "Configuring fastfetch..."
+    mkdir -p /mnt/etc/fastfetch
+    cp /etc/fastfetch/config.jsonc /mnt/etc/fastfetch/config.jsonc
+fi
+
+echo ">>> Scripts and configuration deployed successfully."
