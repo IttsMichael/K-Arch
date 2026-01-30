@@ -26,7 +26,7 @@ subprocess.run(["systemctl", "start", "NetworkManager"], check=True)
 connected = False
 gpu_command = ""
 user = "root"
-paassword = "root"
+password = "root"
 sudo = True
 
 
@@ -54,29 +54,48 @@ for dev in json.loads(datadisk)["blockdevices"]:
 
 def install():
     global drivers
-    base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers"]
+    print("Starting base installation...")
+    base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel", "networkmanager"]
     full_command = base_cmd + gpu_command.split()
-    installation = subprocess.run(full_command, capture_output=False, check=False)
-
-    if installation.returncode == 0:
+    
+    try:
+        installation = subprocess.run(full_command, capture_output=False, check=True)
+        
+        print("Generating fstab...")
+        with open("/mnt/etc/fstab", "w") as fstab_file:
+            subprocess.run(["genfstab", "-U", "/mnt"], stdout=fstab_file, check=True)
+            
+        print("Copying installer scripts...")
+        bash_dir = os.path.join(base_dir, "bash")
+        subprocess.run(["bash", os.path.join(bash_dir, "copyscripts")], check=True)
+        
+        print("Running post-install configuration...")
         make_user()
-    else:
-        print("Installation Failed!")
+        
+        print("Installing bootloader...")
+        subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/installgrub"], check=True)
+        
+        print("Installation finished successfully!")
+        next_clicked()
+        
+    except subprocess.CalledProcessError as e:
+        print(f"Installation Failed: {e}")
 
 def make_user():
     global user
     global password
     root_pass = "root"
-    subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", user], check=True)
+    print(f"Creating user {user}...")
+    subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", "-G", "wheel", user], check=True)
     
-    auth_string = f"{user}:{password}"
+    auth_string = f"{user}:{password}\nroot:{root_pass}\n"
     subprocess.run(
         ["arch-chroot", "/mnt", "chpasswd"],
         input=auth_string.encode(), 
         check=True)
-
-    subprocess.run(["arch-chroot", "/mnt", "chpasswd"], 
-               input=f"root:{root_pass}".encode(), check=True)
+    
+    # Enable sudo for wheel group
+    subprocess.run(["arch-chroot", "/mnt", "sed", "-i", "s/^# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/", "/etc/sudoers"], check=True)
 
 
 def toggle_swap(enabled: bool):

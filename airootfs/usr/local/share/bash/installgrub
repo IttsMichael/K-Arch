@@ -23,5 +23,5 @@ if grub-mkconfig -o /boot/grub/grub.cfg &> /dev/null; then
     echo "Config generated successfully."
 else 
     echo "Error: Configuration failed to install."
-    exit1
+    exit 1
 fi
