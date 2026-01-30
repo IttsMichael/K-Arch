@@ -8,7 +8,7 @@
         "separator",
         {
             "type": "os",
-            "format": "K-Arch{3}" 
+            "format": "K-Arch"
         },
         "host",
         "kernel",
