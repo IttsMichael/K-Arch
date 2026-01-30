@@ -1,7 +1,7 @@
 NAME="K-Arch"
 PRETTY_NAME="K-Arch"
 ID=karch
-ID_LIKE=arch
+ID_LIKE=karch
 BUILD_ID=rolling
 ANSI_COLOR="38;2;23;147;209"
 HOME_URL="https://github.com/IttsMichael/K-Arch"

@@ -55,8 +55,9 @@ for dev in json.loads(datadisk)["blockdevices"]:
 def install():
     global drivers
     print("Starting base installation...")
-    base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel", "networkmanager"]
-    full_command = base_cmd + gpu_command.split()
+    base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
+    "networkmanager", "plasma"]
+    full_command = base_cmd + drivers.split()
     
     try:
         installation = subprocess.run(full_command, capture_output=False, check=True)
@@ -74,9 +75,15 @@ def install():
         
         print("Installing bootloader...")
         subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/installgrub"], check=True)
+
+        print("enabling display manager")
+        subprocess.run(["arch-chroot", "/mnt", "systemctl", "enable", "sddm"], check=True)
         
         print("Installation finished successfully!")
         next_clicked()
+        window.installButton.setEnabled(True)
+
+        
         
     except subprocess.CalledProcessError as e:
         print(f"Installation Failed: {e}")
@@ -104,6 +111,8 @@ def toggle_swap(enabled: bool):
 #test
 
 def savedisk():
+
+    window.installButton.setEnabled(False)
     
     def run_partition():
         
@@ -136,6 +145,7 @@ def savedisk():
                 install()
             else:
                 print("Partitioning failed!")
+                window.installButton.setEnabled(True)
         
         except subprocess.CalledProcessError as e:
             print(f"{e}")
@@ -341,6 +351,9 @@ def save_user():
         else:
             window.passMis.setText("Password empty or doesn't match")
 
+def reboot():
+    subprocess.run(["reboot"], shell=True, check=True)
+
 
 def page1():
     layout_format()
@@ -457,6 +470,7 @@ window.previous1.clicked.connect(back)
 window.saveUser.clicked.connect(save_user)
 window.previous2.clicked.connect(back)
 window.installButton.clicked.connect(savedisk)
+window.rebootButton.clicked.connect(reboot)
 
 
 window.savetime.clicked.connect(on_save_clicked)

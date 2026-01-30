@@ -1,0 +1,4 @@
+DISTRIB_ID=karch
+DISTRIB_RELEASE=rolling
+DISTRIB_CODENAME=n/a
+DISTRIB_DESCRIPTION="Custom arch based distro"
