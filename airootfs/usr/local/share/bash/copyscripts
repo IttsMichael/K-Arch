@@ -27,7 +27,6 @@ find "$BASH_DIR" -maxdepth 1 -type f -not -name "copyscripts" -exec install -Dm7
 echo "Deploying system identification files..."
 [[ -f /etc/os-release ]] && cp /etc/os-release.txt /mnt/etc/os-release.txt
 [[ -f /etc/lsb-release ]] && cp /etc/lsb-release.txt /mnt/etc/lsb-release.txt
-[[ -f /etc/lsb-release ]] && cp /grub/grub.cfg /mnt/boot/grub/grub.cfg
 
 # Fastfetch configuration
 if [[ -f /etc/fastfetch/config.jsonc ]]; then

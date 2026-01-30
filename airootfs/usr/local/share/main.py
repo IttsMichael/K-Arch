@@ -113,6 +113,7 @@ def toggle_swap(enabled: bool):
 def savedisk():
 
     window.installButton.setEnabled(False)
+    next_clicked()
     
     def run_partition():
         

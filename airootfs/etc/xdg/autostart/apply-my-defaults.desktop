@@ -1,0 +1,6 @@
+[Desktop Entry]
+Type=Application
+Name=Apply My Plasma Defaults
+Exec=/usr/local/bin/apply-my-plasma-defaults
+X-KDE-autostart-phase=1
+NoDisplay=true

@@ -1,0 +1,15 @@
+#!/bin/bash
+set -e
+
+SENTINEL="$HOME/.config/.my-plasma-defaults-applied"
+[[ -e "$SENTINEL" ]] && exit 0
+
+lookandfeeltool -a com.karch.desktop || true
+
+if command -v plasma-apply-wallpaperimage >/dev/null 2>&1; then
+  plasma-apply-wallpaperimage "/usr/share/wallpapers/default-wallpaper.png" || true
+fi
+
+
+mkdir -p "$(dirname "$SENTINEL")"
+touch "$SENTINEL"

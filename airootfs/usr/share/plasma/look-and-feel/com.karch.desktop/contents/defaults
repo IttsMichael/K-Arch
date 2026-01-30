@@ -1,0 +1,8 @@
+[kdeglobals][KDE]
+lookAndFeelPackage=com.k-arch.desktop
+
+[plasmarc][Theme]
+name=breeze-dark
+
+[org.kde.plasma.desktop][Wallpaper]
+Image=file:///usr/share/wallpapers/default-wallpaper.png

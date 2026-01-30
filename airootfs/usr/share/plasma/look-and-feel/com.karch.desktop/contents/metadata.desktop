@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=K-Arch
+Comment=Custom arch based distro
+Keywords=Desktop;Workspace;Appearance;Look and Feel;
+Type=Service
+X-KDE-ServiceTypes=Plasma/LookAndFeel
+X-KDE-PluginInfo-Author=IttsMichael
+X-KDE-PluginInfo-Name=com.karch.desktop

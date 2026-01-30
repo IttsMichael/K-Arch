@@ -30,4 +30,9 @@ file_permissions=(
   ["/usr/bin/formatscript"]="0:0:755"
   ["/usr/bin/mountingscript"]="0:0:755"
   ["/usr/local/share/main.py"]="0:0:755"
+  ["/usr/share/plasma/look-and-feel/com.karch.desktop"]="0:0:755"
+  ["/usr/share/wallpapers/default-wallpaper.jpg"]="0:0:644"
+  ["/etc/skel/.config"]="0:0:755"
+  ["/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc"]="0:0:644"
+  ["/usr/local/bin/apply-my-plasma-defaults"]="0:0:755"
 )
