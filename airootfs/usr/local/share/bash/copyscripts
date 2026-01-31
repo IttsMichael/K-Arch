@@ -20,7 +20,50 @@ BASH_DIR="$(dirname "$(readlink -f "$0")")"
 
 # Deploying scripts with correct permissions
 echo "Copying installer scripts to /mnt/usr/local/bin..."
+echo "Copying Plasma themes, wallpapers, and defaults..."
+
+# Required directories
+mkdir -p /mnt/usr/share/plasma
+mkdir -p /mnt/usr/share/wallpapers
+mkdir -p /mnt/etc/skel
+mkdir -p /mnt/etc/xdg/autostart
 mkdir -p /mnt/usr/local/bin
+
+# Plasma look-and-feel packages
+cp -a /usr/share/plasma/look-and-feel \
+      /mnt/usr/share/plasma/
+
+# Plasma desktop themes 
+cp -a /usr/share/plasma/desktoptheme \
+      /mnt/usr/share/plasma/ 2>/dev/null || true
+
+# Plasma wallpapers namespace 
+cp -a /usr/share/plasma/wallpapers \
+      /mnt/usr/share/plasma/ 2>/dev/null || true
+
+# Standard wallpapers
+cp -a /usr/share/wallpapers/* \
+      /mnt/usr/share/wallpapers/
+
+# Skeleton user config
+cp -a /etc/skel/.config \
+      /mnt/etc/skel/
+
+# KDE global defaults 
+cp -a /etc/xdg/kdeglobals \
+      /mnt/etc/xdg/kdeglobals
+
+# Plasma autostart desktop file
+cp -a /etc/xdg/autostart/apply-my-defaults.desktop \
+      /mnt/etc/xdg/autostart/
+
+# Plasma first-login script
+cp -a /usr/local/bin/apply-my-plasma-defaults \
+      /mnt/usr/local/bin/
+
+chmod 755 /mnt/usr/local/bin/apply-my-plasma-defaults
+
+
 find "$BASH_DIR" -maxdepth 1 -type f -not -name "copyscripts" -exec install -Dm755 {} /mnt/usr/local/bin/ \;
 
 # Copy core system identifying files

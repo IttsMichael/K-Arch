@@ -56,7 +56,7 @@ def install():
     global drivers
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
-    "networkmanager", "plasma"]
+    "networkmanager", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin"]
     full_command = base_cmd + drivers.split()
     
     try:
@@ -78,6 +78,9 @@ def install():
 
         print("enabling display manager")
         subprocess.run(["arch-chroot", "/mnt", "systemctl", "enable", "sddm"], check=True)
+
+        print("enabling network manager")
+        subprocess.run(["arch-chroot", "/mnt", "systemctl", "enable", "NetworkManager"], check=True)
         
         print("Installation finished successfully!")
         next_clicked()
