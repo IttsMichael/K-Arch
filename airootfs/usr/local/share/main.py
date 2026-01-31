@@ -14,8 +14,10 @@ from PySide6.QtUiTools import QUiLoader
 from PySide6.QtCore import QFile
 from PySide6.QtWidgets import QListWidgetItem
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QMovie
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
+spinner_path = os.path.join(base_dir, "images", "spinner.gif")
 
 drivers = " "
 page = 0
@@ -53,6 +55,7 @@ for dev in json.loads(datadisk)["blockdevices"]:
 
 
 def install():
+    window.installStatus.setText("Installing packages...")
     global drivers
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
@@ -63,22 +66,28 @@ def install():
         installation = subprocess.run(full_command, capture_output=False, check=True)
         
         print("Generating fstab...")
+        window.installStatus.setText("Generating fstab...")
         with open("/mnt/etc/fstab", "w") as fstab_file:
             subprocess.run(["genfstab", "-U", "/mnt"], stdout=fstab_file, check=True)
             
+        window.installStatus.setText("Copying installer scripts...")
         print("Copying installer scripts...")
         bash_dir = os.path.join(base_dir, "bash")
         subprocess.run(["bash", os.path.join(bash_dir, "copyscripts")], check=True)
         
+        window.installStatus.setText("Post install configuration...")
         print("Running post-install configuration...")
         make_user()
         
+        window.installStatus.setText("Installing bootloader...")
         print("Installing bootloader...")
         subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/installgrub"], check=True)
 
+        window.installStatus.setText("Enabling display manager...")
         print("enabling display manager")
         subprocess.run(["arch-chroot", "/mnt", "systemctl", "enable", "sddm"], check=True)
 
+        window.installStatus.setText("Enabling network manager...")
         print("enabling network manager")
         subprocess.run(["arch-chroot", "/mnt", "systemctl", "enable", "NetworkManager"], check=True)
         
@@ -95,6 +104,7 @@ def make_user():
     global user
     global password
     root_pass = "root"
+    window.installStatus.setText("Creating user " + user)
     print(f"Creating user {user}...")
     subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", "-G", "wheel", user], check=True)
     
@@ -117,6 +127,7 @@ def savedisk():
 
     window.installButton.setEnabled(False)
     next_clicked()
+    window.installStatus.setText("Partitioning...")
     
     def run_partition():
         
@@ -149,6 +160,7 @@ def savedisk():
                 install()
             else:
                 print("Partitioning failed!")
+                window.installStatus.setText("Installation failed")
                 window.installButton.setEnabled(True)
         
         except subprocess.CalledProcessError as e:
@@ -481,6 +493,11 @@ window.savetime.clicked.connect(on_save_clicked)
 window.comboZone.addItems(timezones)
 window.comboDisk.addItems(d[0] for d in disks)
 window.savedisks.clicked.connect(next_clicked)
+
+movie = QMovie(spinner_path) 
+window.gif_label.setMovie(movie)
+window.gif_label.setScaledContents(True)
+movie.start()
 
 window.show()
 window.stackedWidget.setCurrentIndex(0)

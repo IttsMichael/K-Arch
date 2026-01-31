@@ -84,7 +84,8 @@ kwin
 lightdm
 xorg-xwayland
 networkmanager
-alacritty
+konsole
+dolphin
 firefox
 
 python

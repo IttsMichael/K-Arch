@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>521</width>
-    <height>418</height>
+    <width>526</width>
+    <height>422</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>8</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -631,7 +631,7 @@ QListWidget:disabled {
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;We recommend the proprietary drivers for best performance.&lt;/p&gt;&lt;p&gt;Install NVIDIA proprietary drivers?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;We recommend the proprietary drivers for best performance.&lt;/p&gt;&lt;p&gt;Install proprietary drivers?&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="yesgpu">
@@ -961,11 +961,37 @@ QListWidget:disabled {
        <x>20</x>
        <y>70</y>
        <width>461</width>
-       <height>301</height>
+       <height>271</height>
       </rect>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The installation is in progress. Please allow the process&lt;/p&gt;&lt;p&gt;to finish undisturbed to ensure a stable build.&lt;/p&gt;&lt;h3 style=&quot;-qt-paragraph-type:empty; margin-top:14px; margin-bottom:12px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px; font-size:large; font-weight:700;&quot;&gt;&lt;br/&gt;&lt;/h3&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:700; text-decoration: underline;&quot;&gt;Critical Guidelines &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Do Not Power Off:&lt;/span&gt; Turning off your machine now &lt;/p&gt;&lt;p&gt;will result in a broken installation.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Maintain Power:&lt;/span&gt; Keep your device connected to a &lt;/p&gt;&lt;p&gt;stable power source.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Stay Patient:&lt;/span&gt; The system will notify you automatically &lt;/p&gt;&lt;p&gt;when it is safe to reboot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The installation is in progress. Please allow the process&lt;/p&gt;&lt;p&gt;to finish undisturbed to ensure a stable build.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:700; text-decoration: underline;&quot;&gt;Critical Guidelines &lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Do Not Power Off:&lt;/span&gt; Turning off your machine now &lt;/p&gt;&lt;p&gt;will result in a broken installation.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Maintain Power:&lt;/span&gt; Keep your device connected to a &lt;/p&gt;&lt;p&gt;stable power source.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot; font-weight:700;&quot;&gt;- Stay Patient:&lt;/span&gt; The system will notify you automatically &lt;/p&gt;&lt;p&gt;when it is safe to reboot.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="installStatus">
+     <property name="geometry">
+      <rect>
+       <x>300</x>
+       <y>360</y>
+       <width>211</width>
+       <height>20</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string> </string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="gif_label">
+     <property name="geometry">
+      <rect>
+       <x>240</x>
+       <y>350</y>
+       <width>41</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>
@@ -1021,7 +1047,7 @@ A reboot is required to use the installation.</string>
       </rect>
      </property>
      <property name="text">
-      <string> </string>
+      <string/>
      </property>
     </widget>
    </widget>
