@@ -30,6 +30,7 @@ gpu_command = ""
 user = "root"
 password = "root"
 sudo = True
+installing = False
 
 
 datadisk = subprocess.check_output(
@@ -55,6 +56,8 @@ for dev in json.loads(datadisk)["blockdevices"]:
 
 
 def install():
+    global installing
+    installing = True
     window.installStatus.setText("Installing packages...")
     global drivers
     print("Starting base installation...")
@@ -78,6 +81,7 @@ def install():
         window.installStatus.setText("Post install configuration...")
         print("Running post-install configuration...")
         make_user()
+        save_time()
         
         window.installStatus.setText("Installing bootloader...")
         print("Installing bootloader...")
@@ -189,10 +193,9 @@ def layout_format():
 
 
 def save_time():
+    global installing
     layout_code = window.comboLayout.currentData()
     idxtime = window.comboZone.currentText()
-    mnt_path = "/mnt"
-    vconsole_path = os.path.join(mnt_path, "etc/vconsole.conf")
     
     def run_commands():
         try:
@@ -200,6 +203,30 @@ def save_time():
                 subprocess.run(["localectl", "set-keymap", layout_code], check=True)
             
             subprocess.run(["timedatectl", "set-timezone", idxtime], check=True)
+
+            if installing == True:
+                if os.path.exists("/mnt/etc"):
+                    
+                    zone_path = f"/usr/share/zoneinfo/{idxtime}"
+                    if os.path.exists(zone_path):
+                        subprocess.run(["ln", "-sf", zone_path, "/mnt/etc/localtime"], check=True)
+                        subprocess.run(["arch-chroot", "/mnt", "hwclock", "--systohc"], check=True)
+                    
+                    
+                    if layout_code:
+                        with open("/mnt/etc/vconsole.conf", "w") as f:
+                            f.write(f"KEYMAP={layout_code}\n")
+
+                        # X11 layout config
+                        x11_conf_dir = "/mnt/etc/X11/xorg.conf.d"
+                        os.makedirs(x11_conf_dir, exist_ok=True)
+                        with open(os.path.join(x11_conf_dir, "00-keyboard.conf"), "w") as f:
+                            f.write('Section "InputClass"\n')
+                            f.write('        Identifier "system-keyboard"\n')
+                            f.write('        MatchIsKeyboard "on"\n')
+                            f.write(f'        Option "XkbLayout" "{layout_code}"\n')
+                            f.write('EndSection\n')
+
             print("Time and layout updated.")
         except subprocess.CalledProcessError as e:
             print(f"Error setting time/layout: {e}")

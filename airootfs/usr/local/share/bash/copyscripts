@@ -31,7 +31,11 @@ mkdir -p /mnt/usr/local/bin
 mkdir -p /mnt/etc/NetworkManager/system-connections/
 
 
-cp -a /etc/NetworkManager/system-connections/* /mnt/etc/NetworkManager/system-connections/
+if [ -d "/etc/NetworkManager/system-connections/" ] && [ "$(ls -A /etc/NetworkManager/system-connections/)" ]; then
+    cp -a /etc/NetworkManager/system-connections/* /mnt/etc/NetworkManager/system-connections/
+else
+    echo "Directory is empty or does not exist. Skipping copy."
+fi
 
 # Plasma look-and-feel packages
 cp -a /usr/share/plasma/look-and-feel \
