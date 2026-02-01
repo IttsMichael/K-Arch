@@ -17,12 +17,12 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.slideshow
 
 [Containments][39][General]
-positions={"3440x1440":["11","31","desktop:/karch theme","10","24"]}
+positions={"3440x1440":["3","31","desktop:/karch theme","0","30","desktop:/Balatro","1","30","desktop:/k-arch-logo.png","2","30"]}
 sortMode=-1
 
 [Containments][39][Wallpaper][org.kde.slideshow][General]
 Image=file:///usr/share/wallpapers/default-wallpaper.png
-SlidePaths=/usr/share/wallpapers/
+SlidePaths=/usr/share/wallpapers/default-wallpaper.png
 
 [Containments][60]
 activityId=
@@ -38,7 +38,7 @@ immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][60][Applets][63][Configuration][General]
-launchers=applications:systemsettings.desktop,preferred://filemanager,applications:org.kde.konsole.desktop,applications:code-oss.desktop,applications:antigravity.desktop
+launchers=applications:systemsettings.desktop,preferred://filemanager,applications:org.kde.konsole.desktop
 
 [Containments][60][Applets][93]
 immutability=1
@@ -46,8 +46,8 @@ plugin=org.kde.plasma.kickoff
 
 [Containments][60][Applets][93][Configuration]
 PreloadWeight=100
-popupHeight=723
-popupWidth=745
+popupHeight=771
+popupWidth=793
 
 [Containments][60][Applets][93][Configuration][General]
 favoritesPortedToKAstats=true
@@ -109,8 +109,8 @@ immutability=1
 plugin=org.kde.plasma.volume
 
 [Containments][77][Applets][92][Configuration]
-popupHeight=432
-popupWidth=592
+popupHeight=512
+popupWidth=672
 
 [Containments][77][Applets][92][Configuration][General]
 migrated=true
@@ -133,4 +133,4 @@ AppletOrder=84;91;95;86;87;92;94
 
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/karch theme,0,330fb5b3-877f-494a-9317-eb0fe35c1352
+screenMapping=desktop:/Balatro,0,330fb5b3-877f-494a-9317-eb0fe35c1352,desktop:/k-arch-logo.png,0,330fb5b3-877f-494a-9317-eb0fe35c1352,desktop:/karch theme,0,330fb5b3-877f-494a-9317-eb0fe35c1352

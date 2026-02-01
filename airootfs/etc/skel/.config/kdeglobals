@@ -137,7 +137,7 @@ ColorSchemeHash=2c3f86428c11011a7c64ee1e7f47c274d498ff10
 UseSystemBell=true
 
 [Icons]
-Theme=Flatery-Black-Dark
+Theme=breeze
 
 [KDE]
 LookAndFeelPackage=org.kde.breezedark.desktop

@@ -59,7 +59,7 @@ def install():
     global drivers
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
-    "networkmanager", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin"]
+    "networkmanager", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin", "fastfetch", "imagemagick"]
     full_command = base_cmd + drivers.split()
     
     try:
@@ -191,6 +191,8 @@ def layout_format():
 def save_time():
     layout_code = window.comboLayout.currentData()
     idxtime = window.comboZone.currentText()
+    mnt_path = "/mnt"
+    vconsole_path = os.path.join(mnt_path, "etc/vconsole.conf")
     
     def run_commands():
         try:

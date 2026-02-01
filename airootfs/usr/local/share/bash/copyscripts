@@ -28,6 +28,10 @@ mkdir -p /mnt/usr/share/wallpapers
 mkdir -p /mnt/etc/skel
 mkdir -p /mnt/etc/xdg/autostart
 mkdir -p /mnt/usr/local/bin
+mkdir -p /mnt/etc/NetworkManager/system-connections/
+
+
+cp -a /etc/NetworkManager/system-connections/* /mnt/etc/NetworkManager/system-connections/
 
 # Plasma look-and-feel packages
 cp -a /usr/share/plasma/look-and-feel \
