@@ -434,6 +434,7 @@ def toggle_gaming(enabled = bool):
 def save_template():
     global template
     template = True
+    next_clicked()
 
 
 def page1():
@@ -556,7 +557,7 @@ window.previousidk.clicked.connect(back)
 window.saveTemplate.clicked.connect(save_template)
 window.skipTemplate.clicked.connect(next_clicked)
 window.checkDev.toggled.connect(toggle_dev)
-window.swapGaming.toggled.connect(toggle_gaming)
+window.checkGaming.toggled.connect(toggle_gaming)
 
 window.savetime.clicked.connect(on_save_clicked)
 window.comboZone.addItems(timezones)

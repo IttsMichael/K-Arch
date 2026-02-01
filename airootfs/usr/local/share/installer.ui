@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>8</number>
+    <number>7</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -862,6 +862,114 @@ QListWidget:disabled {
     </widget>
    </widget>
    <widget class="QWidget" name="page7">
+    <widget class="QLabel" name="label_24">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>20</y>
+       <width>161</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;h3&gt;Select Template&lt;h3&gt;</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkDev">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>80</y>
+       <width>141</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Development</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_25">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>110</y>
+       <width>381</width>
+       <height>51</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Installs basic development necessities like git, curl, 
+vscode and more.</string>
+     </property>
+    </widget>
+    <widget class="QCheckBox" name="checkGaming">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>180</y>
+       <width>84</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Gaming</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="label_26">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>210</y>
+       <width>271</width>
+       <height>41</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Enables multilib to install steam and other 
+popular gaming software.</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="previousidk">
+     <property name="geometry">
+      <rect>
+       <x>20</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Previous</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="saveTemplate">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>350</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Save</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="skipTemplate">
+     <property name="geometry">
+      <rect>
+       <x>400</x>
+       <y>310</y>
+       <width>88</width>
+       <height>34</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Skip</string>
+     </property>
+    </widget>
+   </widget>
+   <widget class="QWidget" name="page8">
     <widget class="QLabel" name="label_19">
      <property name="geometry">
       <rect>
@@ -941,7 +1049,7 @@ QListWidget:disabled {
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page_2">
+   <widget class="QWidget" name="page91">
     <widget class="QLabel" name="label_22">
      <property name="geometry">
       <rect>
@@ -978,7 +1086,7 @@ QListWidget:disabled {
       </rect>
      </property>
      <property name="text">
-      <string> </string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="gif_label">
@@ -995,7 +1103,7 @@ QListWidget:disabled {
      </property>
     </widget>
    </widget>
-   <widget class="QWidget" name="page8">
+   <widget class="QWidget" name="page92">
     <widget class="QLabel" name="label_20">
      <property name="geometry">
       <rect>
