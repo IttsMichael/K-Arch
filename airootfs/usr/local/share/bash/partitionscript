@@ -37,7 +37,7 @@ if [ "$swapyn" = "y" ]; then
     rootstart=$((rootstart + swapsize))
 fi
 
-if ["$rootyn" = "y"]; then
+if [ "$rootyn" = "y" ]; then
   parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
   echo "Success."
 else 

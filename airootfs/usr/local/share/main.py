@@ -93,11 +93,12 @@ def install():
             try:
                 subprocess.run(sed_cmd, check=True)
                 print("Multilib enabled successfully.")
+                print("Installing gaming packages...")
+                subprocess.run(["pacstrap", "-K", "/mnt", "steam", "wine",  "giflib",
+                "lutris", "discord", "openrgb", "gamemode"])
             except subprocess.CalledProcessError:
                 print("Error: Could not modify pacman.conf. Check if /mnt is mounted.")
 
-            subprocess.run(["pacstrap", "-K", "/mnt", "steam", "wine",  "giflib",
-            "lutris", "discord", "openrgb", "gamemode"])
         
         print("Generating fstab...")
         window.installStatus.setText("Generating fstab...")
@@ -185,7 +186,7 @@ def savedisk():
                 f.write(f'swapyn="{swapyn}"\n')
                 f.write(f'rootyn="{rootyn}"\n')
                 f.write(f'swapsize="{swap_size}"\n')
-                f.write("export TARGET_DISK rootsize swapyn swapsize\n")
+                f.write("export TARGET_DISK rootsize swapyn swapsize rootyn\n")
                 
             bash_dir = os.path.join(base_dir, "bash")
             partition_script = os.path.join(bash_dir, "partitionscript")
@@ -576,7 +577,7 @@ window.previousidk.clicked.connect(back)
 window.saveTemplate.clicked.connect(save_template)
 window.skipTemplate.clicked.connect(next_clicked)
 window.checkDev.toggled.connect(toggle_dev)
-# window.checkGaming.toggled.connect(toggle_gaming)
+window.checkGaming.toggled.connect(toggle_gaming)
 
 window.savetime.clicked.connect(on_save_clicked)
 window.comboZone.addItems(timezones)
