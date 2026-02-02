@@ -34,6 +34,7 @@ installing = False
 dev = False
 gaming = False
 template = False
+useryn = False
 
 
 datadisk = subprocess.check_output(
@@ -69,7 +70,7 @@ def install():
     add = ""
     if template == True:
         if dev == True:
-            add = "git wget curl docker docker-compose neovim tmux vim python nodejs npm go rustup ripgrep fzf htop zsh"
+            add = "git wget curl docker docker-compose neovim tmux vim python npm go rustup ripgrep fzf htop zsh"
 
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
@@ -80,14 +81,23 @@ def install():
         installation = subprocess.run(full_command, capture_output=False, check=True)
 
         if gaming == True:
-            print("Enabling multilib..")
+            print("Enabling multilib...")    
+            sed_script = r'/^# *\[multilib\]/,/^# *Include/ s/^# *//'
+
             sed_cmd = [
-            "sed", "-i", 
-            "/#\[multilib\]/,/#Include = \/etc\/pacman.conf.d\/mirrorlist/ s/^#//", 
-            "/mnt/etc/pacman.conf"
+                "sed", "-i", 
+                sed_script, 
+                "/mnt/etc/pacman.conf"
             ]
-            subprocess.run(sed_cmd, check=True)
-            subprocess.run(["pacstrap", "-K", "/mnt", "steam", "wine", "wine-staging", "giflib", "lutris",])
+
+            try:
+                subprocess.run(sed_cmd, check=True)
+                print("Multilib enabled successfully.")
+            except subprocess.CalledProcessError:
+                print("Error: Could not modify pacman.conf. Check if /mnt is mounted.")
+
+            subprocess.run(["pacstrap", "-K", "/mnt", "steam", "wine",  "giflib",
+            "lutris", "discord", "openrgb", "gamemode"])
         
         print("Generating fstab...")
         window.installStatus.setText("Generating fstab...")
@@ -127,11 +137,13 @@ def install():
 
 def make_user():
     global user
+    global useryn
     global password
     root_pass = "root"
-    window.installStatus.setText("Creating user " + user)
-    print(f"Creating user {user}...")
-    subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", "-G", "wheel", user], check=True)
+    if useryn == True:
+        window.installStatus.setText("Creating user " + user)
+        print(f"Creating user {user}...")
+        subprocess.run(["arch-chroot", "/mnt", "useradd", "-m", "-G", "wheel", user], check=True)
     
     auth_string = f"{user}:{password}\nroot:{root_pass}\n"
     subprocess.run(
@@ -149,7 +161,7 @@ def toggle_swap(enabled: bool):
 #test
 
 def savedisk():
-
+    
     window.installButton.setEnabled(False)
     next_clicked()
     window.installStatus.setText("Partitioning...")
@@ -162,6 +174,8 @@ def savedisk():
         swap_enabled = window.swapCheck.isChecked()
         swap_size = window.spinSwap.value() if swap_enabled else 0
         swapyn = "y" if swap_enabled else "n"
+        root_enabled = window.rootCheck.isChecked()
+        rootyn = "y" if root_enabled else "n"
         vars_path = os.path.join(base_dir, "disk.sh")
 
         try:
@@ -169,6 +183,7 @@ def savedisk():
                 f.write(f'TARGET_DISK="{pathdisk}"\n')
                 f.write(f'rootsize="{root_size}"\n')
                 f.write(f'swapyn="{swapyn}"\n')
+                f.write(f'rootyn="{rootyn}"\n')
                 f.write(f'swapsize="{swap_size}"\n')
                 f.write("export TARGET_DISK rootsize swapyn swapsize\n")
                 
@@ -402,6 +417,8 @@ def install_drivers():
 
 
 def save_user():
+    global useryn
+    useryn = True
     global user
     global password
     usertest = window.userLine.text().strip()
@@ -419,6 +436,11 @@ def save_user():
             next_clicked()
         else:
             window.passMis.setText("Password empty or doesn't match")
+
+def skip_user():
+    global useryn
+    next_clicked()
+    useryn = False
 
 def reboot():
     subprocess.run(["reboot"], shell=True, check=True)
@@ -515,9 +537,6 @@ def page8():
 
 
 
-
-
-
 app = QApplication(sys.argv)
 file = QFile(os.path.join(base_dir, "installer.ui"))
 file.open(QFile.ReadOnly)
@@ -547,7 +566,7 @@ next_btn = window.findChild(QPushButton, "nextButton")
 next_btn.clicked.connect(next_clicked)
 window.yesgpu.clicked.connect(install_drivers)
 window.nogpu.clicked.connect(next_clicked)
-window.skipLogin.clicked.connect(next_clicked)
+window.skipLogin.clicked.connect(skip_user)
 window.previous1.clicked.connect(back)
 window.saveUser.clicked.connect(save_user)
 window.previous2.clicked.connect(back)
@@ -557,7 +576,7 @@ window.previousidk.clicked.connect(back)
 window.saveTemplate.clicked.connect(save_template)
 window.skipTemplate.clicked.connect(next_clicked)
 window.checkDev.toggled.connect(toggle_dev)
-window.checkGaming.toggled.connect(toggle_gaming)
+# window.checkGaming.toggled.connect(toggle_gaming)
 
 window.savetime.clicked.connect(on_save_clicked)
 window.comboZone.addItems(timezones)

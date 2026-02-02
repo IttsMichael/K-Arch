@@ -3,8 +3,7 @@
 echo "Defining target device..."
 
 # List disks and prompt
-# List disks and prompt
-# Use environment variables passed from Python, or default to standard locations if running standalone (though standalone might fail without vars)
+
 : "${BASE_DIR:=/usr/local/share}"
 : "${VARS_FILE:=$BASE_DIR/disk.sh}"
 : "${BASH_SCRIPTS_DIR:=$BASE_DIR/bash}"
@@ -38,10 +37,14 @@ if [ "$swapyn" = "y" ]; then
     rootstart=$((rootstart + swapsize))
 fi
 
-echo "Creating root partition ($rootsize)..."
-rootend=$((rootstart + rootsize))
-parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
-echo "Success."
+if ["$rootyn" = "y"]; then
+  parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
+  echo "Success."
+else 
+  echo "Creating root partition ($rootsize)..."
+  rootend=$((rootstart + rootsize))
+  parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
+  echo "Success."
 
 echo "Successfully created UEFI, root and swap partition."
 

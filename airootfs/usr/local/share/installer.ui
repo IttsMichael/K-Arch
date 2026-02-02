@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>7</number>
+    <number>9</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -378,6 +378,19 @@ Make sure you choose the correct device before continuing.
       <string>Previous</string>
      </property>
     </widget>
+    <widget class="QCheckBox" name="rootCheck">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>245</y>
+       <width>121</width>
+       <height>22</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Use full disk</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page3">
     <widget class="QLabel" name="label_8">
@@ -481,6 +494,9 @@ QListWidget:disabled {
        <width>271</width>
        <height>32</height>
       </rect>
+     </property>
+     <property name="text">
+      <string/>
      </property>
      <property name="echoMode">
       <enum>QLineEdit::EchoMode::Password</enum>
@@ -968,6 +984,19 @@ popular gaming software.</string>
       <string>Skip</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_27">
+     <property name="geometry">
+      <rect>
+       <x>127</x>
+       <y>182</y>
+       <width>91</width>
+       <height>18</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;doesn't work&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="page8">
     <widget class="QLabel" name="label_19">
@@ -1079,20 +1108,20 @@ popular gaming software.</string>
     <widget class="QLabel" name="installStatus">
      <property name="geometry">
       <rect>
-       <x>300</x>
+       <x>350</x>
        <y>360</y>
        <width>211</width>
        <height>20</height>
       </rect>
      </property>
      <property name="text">
-      <string/>
+      <string>  </string>
      </property>
     </widget>
     <widget class="QLabel" name="gif_label">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>270</x>
        <y>350</y>
        <width>41</width>
        <height>41</height>

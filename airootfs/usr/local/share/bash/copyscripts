@@ -41,6 +41,12 @@ echo "Copying hostname..."
 
 cp -a /etc/hostname /mnt/etc/
 
+echo "Copying pacman.conf..."
+
+cp -a /etc/pacman.conf /mnt/etc/
+
+echo "Copying plasma config..."
+
 # Plasma look-and-feel packages
 cp -a /usr/share/plasma/look-and-feel \
       /mnt/usr/share/plasma/
