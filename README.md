@@ -36,7 +36,9 @@ sudo mkarchiso -v .
 ### Download ISO
 You can download the ISO from google drive and flash it directly.
 I recommend the **linux tool dd** to flash it.
-''If you download the ISO direclty it might not be the most recent version, but it's a stable one.**
+**If you download the ISO directly it might not be the most recent version, but it's a stable one.**
+
+https://drive.google.com/file/d/1cmWOOH0WqU3NbftJgVjVAC7m0huDaHiJ/view?usp=sharing
 
 ## Licensing & Acknowledgment 
 
