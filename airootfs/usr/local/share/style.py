@@ -1,116 +1,88 @@
 def apply_style(widget):
     widget.setStyleSheet("""
-    /* Base window */
+    /* Base window - Neutral Slate Charcoal */
     QWidget {
-        background-color: #0f1115;
-        color: #e6e6e6;
-        font-size: 12px;
+        background-color: #1C1E20; 
+        color: #F5F9FF; /* Snow White text */
+        font-size: 13px;
+        font-family: 'Segoe UI', sans-serif;
     }
 
-    /* Section titles */
+    /* Section titles - Sky Blue */
     QLabel[sectionTitle="true"] {
-        font-size: 15px;
+        font-size: 18px;
         font-weight: bold;
-        color: #ffffff;
-        padding-bottom: 4px;
+        color: #91C8F6;
+        padding-bottom: 5px;
     }
 
     /* Normal labels */
     QLabel {
-        color: #e6e6e6;
+        color: #D1D5DB; /* Neutral light grey */
     }
 
-    /* Buttons */
+    /* Buttons - Meadow Green */
     QPushButton {
-        background-color: #1b1f27;
-        border: 1px solid #2b2f38;
-        padding: 6px 14px;
-        border-radius: 4px;
+        background-color: #7FB845;
+        border: none;
+        color: #1A2E26; 
+        font-weight: bold;
+        padding: 8px 16px;
+        border-radius: 6px;
     }
 
     QPushButton:hover {
-        background-color: #232834;
-        border-color: #1793d1; /* Arch blue */
+        background-color: #96D156;
     }
 
     QPushButton:pressed {
-        background-color: #1793d1;
-        color: #ffffff;
+        background-color: #91C8F6; /* Sky Blue on click */
+        color: #1A2E26;
     }
 
-    QPushButton:disabled {
-        background-color: #16181d;
-        color: #777777;
-        border-color: #222222;
-    }
-
-    /* Inputs */
+    /* Inputs - Dark Neutral */
     QComboBox, QSpinBox, QLineEdit {
-        background-color: #16181d;
-        border: 1px solid #2b2f38;
-        padding: 4px 6px;
+        background-color: #111214;
+        border: 1px solid #374151;
+        padding: 5px;
         border-radius: 4px;
-        selection-background-color: #1793d1;
-        selection-color: #ffffff;
+        color: #F5F9FF;
     }
 
-    QComboBox:hover, QSpinBox:hover, QLineEdit:hover {
-        border-color: #1793d1;
+    QComboBox:hover, QLineEdit:focus {
+        border-color: #91C8F6;
     }
 
-    QComboBox::drop-down {
-        border: none;
-    }
-
-    /* Dropdown list */
-    QComboBox QAbstractItemView {
-        background-color: #16181d;
-        border: 1px solid #2b2f38;
-        selection-background-color: #1793d1;
-        selection-color: #ffffff;
-    }
-
-    /* Checkboxes */
-    QCheckBox {
-        spacing: 8px;
-    }
-
+    /* Checkboxes - Matched to Meadow Green */
     QCheckBox::indicator {
-        width: 16px;
-        height: 16px;
-        border-radius: 3px;
-        border: 1px solid #2b2f38;
-        background-color: #16181d;
-    }
-
-    QCheckBox::indicator:hover {
-        border-color: #1793d1;
+        width: 18px;
+        height: 18px;
+        border-radius: 4px;
+        border: 1px solid #374151;
+        background-color: #111214;
     }
 
     QCheckBox::indicator:checked {
-        background-color: #1793d1;
-        border-color: #1793d1;
+        background-color: #7FB845; /* Meadow Green - Matches Buttons */
+        border-color: #7FB845;
         image: url("data:image/svg+xml;utf8,\
             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>\
-                <path fill='white' d='M6.2 11.2L3.3 8.3l1.1-1.1 1.8 1.8 4.3-4.3 1.1 1.1z'/>\
+                <path fill='%231C1E20' d='M6.2 11.2L3.3 8.3l1.1-1.1 1.8 1.8 4.3-4.3 1.1 1.1z'/>\
             </svg>");
     }
 
-    QCheckBox::indicator:disabled {
-        background-color: #111318;
-        border-color: #222222;
-    }
-
-
-    /* Progress bar */
+    /* Progress bar - Gradient from Meadow to Sky */
     QProgressBar {
-        border: 1px solid #2b2f38;
-        background-color: #16181d;
-        height: 16px;
+        border: 1px solid #374151;
+        background-color: #111214;
+        height: 14px;
         text-align: center;
+        border-radius: 7px;
     }
 
     QProgressBar::chunk {
-        background-color: #1793d1;
+        background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, \
+            stop:0 #7FB845, stop:1 #91C8F6);
+        border-radius: 5px;
     }
     """)

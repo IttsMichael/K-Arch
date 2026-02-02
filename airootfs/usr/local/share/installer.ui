@@ -26,7 +26,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>9</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="page">
     <widget class="QLabel" name="info">
@@ -52,23 +52,7 @@
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #1793D1;
-    color: white;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 14px;
-}
-QPushButton:hover {
-    background-color: #1fa3e6;
-}
-
-QWidget {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Next</string>
@@ -99,23 +83,7 @@ QWidget {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #1793D1;
-    color: white;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 14px;
-}
-QPushButton:hover {
-    background-color: #1fa3e6;
-}
-
-QWidget {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Save</string>
@@ -179,6 +147,11 @@ QWidget {
        <height>32</height>
       </rect>
      </property>
+     <property name="styleSheet">
+      <string notr="true">selection-color: rgb(127, 184, 69);
+selection-color: rgb(127, 182, 69);
+selection-background-color: rgb(127, 184, 69);</string>
+     </property>
     </widget>
     <widget class="QLabel" name="label_7">
      <property name="geometry">
@@ -190,13 +163,7 @@ QWidget {
       </rect>
      </property>
      <property name="text">
-      <string>&lt;p&gt;
-  You can change either option at any time. The keyboard layout will&lt;br&gt;
-  be applied immediately in the console; however, using it in a&lt;br&gt;
-  desktop environment requires a reboot.&lt;br&gt;
-  Select the list and type to filter the results.
-&lt;/p&gt;
-</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;You can change either option at any time. The keyboard layout will&lt;br/&gt;be applied immediately in the console; however, using it in a&lt;br/&gt;desktop environment requires a reboot.&lt;br/&gt;&lt;span style=&quot; font-weight:700; text-decoration: underline;&quot;&gt;Select the list and type to filter the results. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
     </widget>
     <widget class="QPushButton" name="back1">
@@ -234,23 +201,7 @@ QWidget {
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">QPushButton {
-    background-color: #1793D1;
-    color: white;
-    border-radius: 6px;
-    padding: 8px;
-    font-size: 14px;
-}
-QPushButton:hover {
-    background-color: #1fa3e6;
-}
-
-QWidget {
-    background-color: #121212;
-    color: #e0e0e0;
-}
-
-</string>
+      <string notr="true"/>
      </property>
      <property name="text">
       <string>Save</string>
@@ -984,19 +935,6 @@ popular gaming software.</string>
       <string>Skip</string>
      </property>
     </widget>
-    <widget class="QLabel" name="label_27">
-     <property name="geometry">
-      <rect>
-       <x>127</x>
-       <y>182</y>
-       <width>91</width>
-       <height>18</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;doesn't work&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-     </property>
-    </widget>
    </widget>
    <widget class="QWidget" name="page8">
     <widget class="QLabel" name="label_19">
@@ -1115,7 +1053,7 @@ popular gaming software.</string>
       </rect>
      </property>
      <property name="text">
-      <string>  </string>
+      <string/>
      </property>
     </widget>
     <widget class="QLabel" name="gif_label">
