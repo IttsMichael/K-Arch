@@ -16,7 +16,7 @@ It uses the fully custom K-Arch-Installer.
 ## K-Arch-Installer
 The K-Arch-Installer fully automates the installation and provides more options than most popular installers.
 
-- detects your GPU and installs the proprietary automatically
+- detects your GPU and installs the proprietary drivers automatically
 - offers templates to save time
 - has a custom network manager
 - **does not use** any calamares/anaconda base
