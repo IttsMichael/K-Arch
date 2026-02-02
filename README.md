@@ -1,8 +1,42 @@
+# K-Arch
+K-Arch is an arch based linux distro running the cachyOS kernel. It uses KDE plasma on wayland as default as well as custom configurations.
+It uses the fully custom K-Arch-Installer.
+
+## Showcase
+
+<img width="1278" height="795" alt="image" src="https://github.com/user-attachments/assets/e6b43572-6eca-47df-8613-545e89d8702f" />
+
+<img width="1279" height="797" alt="image" src="https://github.com/user-attachments/assets/d691d6fc-fb48-4b72-a162-4c2b4a0c715f" />
+
+<img width="1279" height="802" alt="image" src="https://github.com/user-attachments/assets/2c66f7fe-ebcc-4635-9cbb-8cd0d99a6003" />
 
 
-### The installer is NOT complete or suitable for a full installation 
-### Changes are immediate and irreversible
 
+
+## K-Arch-Installer
+The K-Arch-Installer fully automates the installation and provides more options than most popular installers.
+
+- detects your GPU and installs the proprietary automatically
+- offers templates to save time
+- has a custom network manager
+- **does not use** any calamares/anaconda base
+
+## Build the ISO yourself
+You can build the ISO from the source yourself by using mkarchiso.
+The ISO file will end in **K-Arch/out/**
+
+```
+sudo pacman -S archiso git
+git clone https://github.com/IttsMichael/K-Arch.git
+cd K-Arch
+sudo mkarchiso -v .
+```
+**That procces can take a while, especially on low end devices so you might want to download the ISO directly.**
+
+### Download ISO
+You can download the ISO from google drive and flash it directly.
+I recommend the **linux tool dd** to flash it.
+''If you download the ISO direclty it might not be the most recent version, but it's a stable one.**
 
 ## Licensing & Acknowledgment 
 
@@ -28,4 +62,8 @@ This project is a custom ISO built using the following official tools:
 
 * **Base:** [Arch Linux](https://archlinux.org/)
 * **Build Tool:** [archiso](https://gitlab.archlinux.org/archlinux/archiso) - The official Arch Linux live image builder.
+
+### Contact
+michael.last1808@gmail.com
+discord: #ittsmichael
 
