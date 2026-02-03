@@ -16,7 +16,7 @@ It uses the fully custom K-Arch-Installer.
 ## K-Arch-Installer
 The K-Arch-Installer fully automates the installation and provides more options than most popular installers.
 
-- detects your GPU and installs the proprietary automatically
+- detects your GPU and installs the proprietary drivers automatically
 - offers templates to save time
 - has a custom network manager
 - **does not use** any calamares/anaconda base
@@ -36,7 +36,9 @@ sudo mkarchiso -v .
 ### Download ISO
 You can download the ISO from google drive and flash it directly.
 I recommend the **linux tool dd** to flash it.
-''If you download the ISO direclty it might not be the most recent version, but it's a stable one.**
+**If you download the ISO directly it might not be the most recent version, but it's a stable one.**
+
+https://drive.google.com/file/d/1cmWOOH0WqU3NbftJgVjVAC7m0huDaHiJ/view?usp=sharing
 
 ## Licensing & Acknowledgment 
 
