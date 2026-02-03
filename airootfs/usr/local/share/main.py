@@ -459,6 +459,8 @@ def save_template():
     template = True
     next_clicked()
 
+def toggle_root(enabled = bool):
+    window.spinRoot.setEnabled(not enabled)
 
 def page1():
     layout_format()
@@ -536,62 +538,80 @@ def page8():
     window.ovRoot.setText("Root Size: " + str(root_size) + " MiB")
     window.ovUser.setText("Useraccount:  " + user)
 
-
+# type and file
 
 app = QApplication(sys.argv)
 file = QFile(os.path.join(base_dir, "installer.ui"))
 file.open(QFile.ReadOnly)
 
+# loading, reading window and applying style
 
 loader = QUiLoader()
 window = loader.load(file)
 file.close()
 
-apply_style(window)
-window.wifiList.itemSelectionChanged.connect(log_item)
+apply_style(window) # from style..py
 
-window.back1.clicked.connect(back)
-window.back2.clicked.connect(back)
-window.back3.clicked.connect(back)
-window.back5.clicked.connect(back)
+# previous and back
 
-window.next4.clicked.connect(next_clicked)
-window.back4.clicked.connect(back)
-window.nextInternet.clicked.connect(next_internet)
-window.connect_button.clicked.connect(connect_wifi)
-window.refreshn.clicked.connect(page3)
-window.swapCheck.toggled.connect(toggle_swap)
-window.ethernetCheck.toggled.connect(toggle_ethernet)
-toggle_swap(window.swapCheck.isChecked())
-next_btn = window.findChild(QPushButton, "nextButton")
-next_btn.clicked.connect(next_clicked)
-window.yesgpu.clicked.connect(install_drivers)
-window.nogpu.clicked.connect(next_clicked)
-window.skipLogin.clicked.connect(skip_user)
+window.previous.clicked.connect(back)
 window.previous1.clicked.connect(back)
-window.saveUser.clicked.connect(save_user)
 window.previous2.clicked.connect(back)
+window.previous3.clicked.connect(back)
+window.previous4.clicked.connect(back)
+window.previous5.clicked.connect(back)
+window.previous6.clicked.connect(back)
+window.previous7.clicked.connect(back)
+
+# save and next
+
+window.nextButton.clicked.connect(next_clicked)
+window.saveUser.clicked.connect(save_user)
+window.yesgpu.clicked.connect(install_drivers)
+window.next4.clicked.connect(next_clicked)
 window.installButton.clicked.connect(savedisk)
-window.rebootButton.clicked.connect(reboot)
-window.previousidk.clicked.connect(back)
 window.saveTemplate.clicked.connect(save_template)
-window.skipTemplate.clicked.connect(next_clicked)
+window.nextInternet.clicked.connect(next_internet)
+window.savetime.clicked.connect(on_save_clicked)
+window.savedisks.clicked.connect(next_clicked)
+window.rebootButton.clicked.connect(reboot)
+
+# toggles and checkmarks
+
+window.ethernetCheck.toggled.connect(toggle_ethernet)
+window.rootCheck.toggled.connect(toggle_root)
+window.swapCheck.toggled.connect(toggle_swap)
 window.checkDev.toggled.connect(toggle_dev)
 window.checkGaming.toggled.connect(toggle_gaming)
 
-window.savetime.clicked.connect(on_save_clicked)
+# rest
+
+window.connect_button.clicked.connect(connect_wifi)
+window.refreshn.clicked.connect(page3)
+toggle_swap(window.swapCheck.isChecked())
+
+window.nogpu.clicked.connect(next_clicked)
+window.skipLogin.clicked.connect(skip_user)
+window.skipTemplate.clicked.connect(next_clicked)
+
+# combo and spin boxes
+
 window.comboZone.addItems(timezones)
 window.comboDisk.addItems(d[0] for d in disks)
-window.savedisks.clicked.connect(next_clicked)
+window.wifiList.itemSelectionChanged.connect(log_item)
+
+# loading gif
 
 movie = QMovie(spinner_path) 
 window.gif_label.setMovie(movie)
 window.gif_label.setScaledContents(True)
 movie.start()
 
+# open window, reset variables
+
 window.show()
 window.stackedWidget.setCurrentIndex(0)
-page_turn() # Ensure first page is initialized
+page_turn() # ensure first page is initialized
 sys.exit(app.exec())
 
 

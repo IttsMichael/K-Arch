@@ -8,12 +8,21 @@ def apply_style(widget):
         font-family: 'Segoe UI', sans-serif;
     }
 
+    /* Global Disabled State - Catch-all for basic text */
+    QWidget:disabled {
+        color: #6B7280; /* Muted slate grey */
+    }
+
     /* Section titles - Sky Blue */
     QLabel[sectionTitle="true"] {
         font-size: 18px;
         font-weight: bold;
         color: #91C8F6;
         padding-bottom: 5px;
+    }
+    
+    QLabel[sectionTitle="true"]:disabled {
+        color: #4B5563;
     }
 
     /* Normal labels */
@@ -40,6 +49,11 @@ def apply_style(widget):
         color: #1A2E26;
     }
 
+    QPushButton:disabled {
+        background-color: #374151; /* Dark grey-blue */
+        color: #9CA3AF; /* Light grey text */
+    }
+
     /* Inputs - Dark Neutral */
     QComboBox, QSpinBox, QLineEdit {
         background-color: #111214;
@@ -53,6 +67,12 @@ def apply_style(widget):
         border-color: #91C8F6;
     }
 
+    QComboBox:disabled, QSpinBox:disabled, QLineEdit:disabled {
+        background-color: #1A1C1E;
+        border-color: #2D3748;
+        color: #4B5563;
+    }
+
     /* Checkboxes - Matched to Meadow Green */
     QCheckBox::indicator {
         width: 18px;
@@ -63,12 +83,17 @@ def apply_style(widget):
     }
 
     QCheckBox::indicator:checked {
-        background-color: #7FB845; /* Meadow Green - Matches Buttons */
+        background-color: #7FB845;
         border-color: #7FB845;
         image: url("data:image/svg+xml;utf8,\
             <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'>\
                 <path fill='%231C1E20' d='M6.2 11.2L3.3 8.3l1.1-1.1 1.8 1.8 4.3-4.3 1.1 1.1z'/>\
             </svg>");
+    }
+
+    QCheckBox::indicator:disabled {
+        background-color: #2D3748;
+        border-color: #374151;
     }
 
     /* Progress bar - Gradient from Meadow to Sky */
@@ -84,5 +109,13 @@ def apply_style(widget):
         background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, \
             stop:0 #7FB845, stop:1 #91C8F6);
         border-radius: 5px;
+    }
+
+    QProgressBar:disabled {
+        background-color: #1A1C1E;
+    }
+
+    QProgressBar::chunk:disabled {
+        background-color: #4B5563; /* Greyed out progress */
     }
     """)

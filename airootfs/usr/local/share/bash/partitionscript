@@ -38,13 +38,14 @@ if [ "$swapyn" = "y" ]; then
 fi
 
 if [ "$rootyn" = "y" ]; then
-  parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
-  echo "Success."
+    echo "Creating root partition... (100%)"
+    parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
+    echo "Success."
 else 
-  echo "Creating root partition ($rootsize)..."
-  rootend=$((rootstart + rootsize))
-  parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
-  echo "Success."
+    echo "Creating root partition ($rootsize)..."
+    rootend=$((rootstart + rootsize))
+    parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
+    echo "Success."
 fi
 
 echo "Successfully created UEFI, root and swap partition."
