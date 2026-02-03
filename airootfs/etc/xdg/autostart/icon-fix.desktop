@@ -1,0 +1,5 @@
+[Desktop Entry]
+Type=Application
+Name=Fix Installer Icon
+Exec=cp /usr/share/applications/install-karch.desktop ~/Desktop/
+X-KDE-autostart-phase=1

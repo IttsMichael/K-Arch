@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Install K-Arch
+Comment=Launch the PySide6 System Installer
+Exec=sudo /usr/bin/python /usr/local/share/main.py
+Icon=/etc/skel/.config/fastfetch/k-arch-logo.png
+Terminal=false
+Categories=System;
