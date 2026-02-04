@@ -18,7 +18,6 @@ from PySide6.QtGui import QMovie
 
 base_dir = os.path.dirname(os.path.abspath(__file__))
 spinner_path = os.path.join(base_dir, "images", "spinner.gif")
-
 drivers = " "
 page = 0
 wifi_status = "Disconnected"
@@ -35,6 +34,7 @@ dev = False
 gaming = False
 template = False
 useryn = False
+
 
 
 datadisk = subprocess.check_output(
@@ -159,7 +159,18 @@ def make_user():
 def toggle_swap(enabled: bool):
     window.spinSwap.setEnabled(enabled)
 
-#test
+def check_uefi():
+    try:
+        if os.path.exists("/sys/firmware/efi/"):
+            print("UEFI detected")
+            next_clicked()
+        else:
+            print("Legacy BIOS detected")
+            window.stackedWidget.setCurrentIndex(12)
+    except Exception as e:
+        print(f"Error checking BIOS mode: {e}")
+        return None
+
 
 def savedisk():
     
@@ -565,7 +576,7 @@ window.previous7.clicked.connect(back)
 
 # save and next
 
-window.nextButton.clicked.connect(next_clicked)
+window.nextButton.clicked.connect(check_uefi)
 window.saveUser.clicked.connect(save_user)
 window.yesgpu.clicked.connect(install_drivers)
 window.next4.clicked.connect(next_clicked)
@@ -575,6 +586,7 @@ window.nextInternet.clicked.connect(next_internet)
 window.savetime.clicked.connect(on_save_clicked)
 window.savedisks.clicked.connect(next_clicked)
 window.rebootButton.clicked.connect(reboot)
+window.rebootBtn.clicked.connect(reboot)
 
 # toggles and checkmarks
 
