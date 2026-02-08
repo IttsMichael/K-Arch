@@ -81,6 +81,12 @@ cp -a /usr/local/bin/apply-my-plasma-defaults \
 
 chmod 755 /mnt/usr/local/bin/apply-my-plasma-defaults
 
+echo "Copying updater"
+
+mkdir -p /usr/share/applications
+
+cp -a /usr/local/share/updater/ /mnt/usr/share/
+cp -a /usr/local/share/updater.desktop /mnt/usr/share/applications
 
 find "$BASH_DIR" -maxdepth 1 -type f -not -name "copyscripts" -exec install -Dm755 {} /mnt/usr/local/bin/ \;
 
