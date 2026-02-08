@@ -36,4 +36,6 @@ file_permissions=(
   ["/etc/skel/.config/plasma-org.kde.plasma.desktop-appletsrc"]="0:0:644"
   ["/usr/local/bin/apply-my-plasma-defaults"]="0:0:755"
   ["/etc/skel/Desktop/install-karch.desktop"]="0:0:755"
+  ["/usr/local/share/updater/updater"]="0:0:644"
+
 )
