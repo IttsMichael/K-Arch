@@ -1,0 +1,2 @@
+cargo:rerun-if-changed=src/updater.gresource.xml
+cargo:rerun-if-changed=src/window.ui

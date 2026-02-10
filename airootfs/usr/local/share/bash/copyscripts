@@ -88,7 +88,7 @@ mkdir -p /usr/share/applications
 cp -a /usr/local/share/updater/ /mnt/usr/share/
 cp -a /usr/local/share/updater.desktop /mnt/usr/share/applications
 
-chmod +x /mnt/usr/share/updater/updater
+chmod +x /mnt/usr/share/updater/updater-new
 
 find "$BASH_DIR" -maxdepth 1 -type f -not -name "copyscripts" -exec install -Dm755 {} /mnt/usr/local/bin/ \;
 

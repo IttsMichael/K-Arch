@@ -2,7 +2,7 @@
 Type=Application
 Name=K-Arch Updater
 Comment=Pacman updater
-Exec=/usr/share/updater/updater
+Exec=/usr/share/updater/updater-new
 Icon=~/.config/fastfetch/k-arch-logo.png
 Terminal=false
 Categories=System;
