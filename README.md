@@ -2,6 +2,8 @@
 K-Arch is an arch based linux distro running the cachyOS kernel. It uses KDE plasma on wayland as default as well as custom configurations.
 It uses the fully custom K-Arch-Installer.
 
+## The drive upload is OUTDATED, use the source!
+
 ## Showcase
 
 <img width="1278" height="795" alt="image" src="https://github.com/user-attachments/assets/e6b43572-6eca-47df-8613-545e89d8702f" />
