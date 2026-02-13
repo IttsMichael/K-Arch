@@ -74,7 +74,7 @@ def install():
 
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
-    "networkmanager", "vim", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin", "fastfetch", "imagemagick"]
+    "networkmanager", "vim", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin", "fastfetch", "imagemagick", "karch-updater"]
     full_command = base_cmd + drivers.split() + add.split()
     
     try:
