@@ -4,6 +4,8 @@ It uses the fully custom K-Arch-Installer.
 
 ## The drive upload is OUTDATED, use the source!
 
+## Added custom repository
+
 ## Showcase
 
 <img width="1278" height="795" alt="image" src="https://github.com/user-attachments/assets/e6b43572-6eca-47df-8613-545e89d8702f" />
@@ -35,12 +37,7 @@ sudo mkarchiso -v .
 ```
 **That procces can take a while, especially on low end devices so you might want to download the ISO directly.**
 
-### Download ISO
-You can download the ISO from google drive and flash it directly.
-I recommend the **linux tool dd** to flash it.
-**If you download the ISO directly it might not be the most recent version, but it's a stable one.**
 
-https://drive.google.com/file/d/17Sccmbg5A6LsBZIhNpA4Ift3zKl70uSN/view?usp=sharing
 
 ## Licensing & Acknowledgment 
 
