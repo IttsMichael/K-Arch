@@ -6,6 +6,8 @@ It uses the fully custom K-Arch-Installer.
 
 ## Added custom repository
 
+http://karch-linux.org:3000
+
 ## Showcase
 
 <img width="1278" height="795" alt="image" src="https://github.com/user-attachments/assets/e6b43572-6eca-47df-8613-545e89d8702f" />
