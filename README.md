@@ -1,20 +1,14 @@
 # K-Arch
 K-Arch is an arch based linux distro running the cachyOS kernel. It uses KDE plasma on wayland as default as well as custom configurations.
-It uses the fully custom K-Arch-Installer.
+It uses the fully custom K-Arch-Installer & Updater
 
-## The drive upload is OUTDATED, use the source!
-
-## Added custom repository
-
+## Download
 http://karch-linux.org:3000
 
 ## Showcase
+<img width="1280" height="798" alt="image" src="https://github.com/user-attachments/assets/2ba8a597-44de-4eb9-bfde-20d13b19f0cf" />
 
-<img width="1278" height="795" alt="image" src="https://github.com/user-attachments/assets/e6b43572-6eca-47df-8613-545e89d8702f" />
 
-<img width="1279" height="797" alt="image" src="https://github.com/user-attachments/assets/d691d6fc-fb48-4b72-a162-4c2b4a0c715f" />
-
-<img width="1279" height="802" alt="image" src="https://github.com/user-attachments/assets/2c66f7fe-ebcc-4635-9cbb-8cd0d99a6003" />
 
 
 
@@ -38,7 +32,6 @@ cd K-Arch
 sudo mkarchiso -v .
 ```
 **That procces can take a while, especially on low end devices so you might want to download the ISO directly.**
-
 
 
 ## Licensing & Acknowledgment 
