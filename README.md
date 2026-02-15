@@ -6,10 +6,10 @@ It uses the fully custom K-Arch-Installer & Updater
 http://karch-linux.org
 
 ## Showcase
-<img width="1280" height="798" alt="image" src="https://github.com/user-attachments/assets/2ba8a597-44de-4eb9-bfde-20d13b19f0cf" />
+<img width="1273" height="791" alt="image" src="https://github.com/user-attachments/assets/a1d8df08-e99b-4805-841a-38e49562c691" />
 
-<img width="1278" height="799" alt="image" src="https://github.com/user-attachments/assets/e56a11ef-090b-42e5-a6ca-c61daf2e747d" />
-
+<img width="1279" height="796" alt="image" src="https://github.com/user-attachments/assets/a909326c-0ace-4f47-9b35-3438825719b9" />
+distribution
 <img width="1277" height="797" alt="image" src="https://github.com/user-attachments/assets/46219ae3-1399-4d03-8ed5-d918cbf449da" />
 
 
