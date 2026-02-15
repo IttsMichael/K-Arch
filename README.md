@@ -3,7 +3,7 @@ K-Arch is an arch based linux distro running the cachyOS kernel. It uses KDE pla
 It uses the fully custom K-Arch-Installer & Updater
 
 ## Download
-http://karch-linux.org:3000
+http://karch-linux.org
 
 ## Showcase
 <img width="1280" height="798" alt="image" src="https://github.com/user-attachments/assets/2ba8a597-44de-4eb9-bfde-20d13b19f0cf" />
