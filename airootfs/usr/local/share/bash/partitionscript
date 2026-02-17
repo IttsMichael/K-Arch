@@ -53,7 +53,7 @@ if [ "$uefiyn" = "y" ]; then
     bash "$BASH_SCRIPTS_DIR/formatscript" || { echo "install_base failed"; exit 1; }
 else 
     echo "Creating partition table..."
-    parted -s "$TARGET_DISK" mklabel mbr || { echo "Faild to create partition table"; exit 1; }
+    parted -s "$TARGET_DISK" mklabel msdos || { echo "Faild to create partition table"; exit 1; }
     echo "Success."
 
     rootstart=1
