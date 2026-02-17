@@ -14,42 +14,74 @@ if [[ ! -f "$VARS_FILE" ]]; then
 fi
 source "$VARS_FILE"
 
-
-echo "Creating partition table..."
-parted -s "$TARGET_DISK" mklabel gpt || { echo "Faild to create partition table"; exit 1; }
-echo "Success."
-
-echo "Creating UEFI Boot Partition (1GiB)..."
-parted -s "$TARGET_DISK" mkpart primary fat32 1MiB 1025MiB || { echo "Faild to create UEFI boot partition."; exit 1; }
-parted -s "$TARGET_DISK" set 1 esp on || { echo "Faild to create UEFI boot partition."; exit 1; }
-echo "Success."
-
-rootstart=1025
-
-
-if [ "$swapyn" = "y" ]; then
-    echo "Creating Swap Partition ($swapsize)..."
-    swapstart="${rootstart}MiB"
-    swapend="$((rootstart + swapsize))MiB"
-    parted -s "$TARGET_DISK" mkpart primary linux-swap "$swapstart" "$swapend" || { echo "Failed to create swap partition."; exit 1; }
+if [ "$uefiyn" = "y" ]; then
+    echo "Creating partition table..."
+    parted -s "$TARGET_DISK" mklabel gpt || { echo "Faild to create partition table"; exit 1; }
     echo "Success."
 
-    rootstart=$((rootstart + swapsize))
-fi
-
-if [ "$rootyn" = "y" ]; then
-    echo "Creating root partition... (100%)"
-    parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
+    echo "Creating UEFI Boot Partition (1GiB)..."
+    parted -s "$TARGET_DISK" mkpart primary fat32 1MiB 1025MiB || { echo "Faild to create UEFI boot partition."; exit 1; }
+    parted -s "$TARGET_DISK" set 1 esp on || { echo "Faild to create UEFI boot partition."; exit 1; }
     echo "Success."
+
+    rootstart=1025
+
+
+    if [ "$swapyn" = "y" ]; then
+        echo "Creating Swap Partition ($swapsize)..."
+        swapstart="${rootstart}MiB"
+        swapend="$((rootstart + swapsize))MiB"
+        parted -s "$TARGET_DISK" mkpart primary linux-swap "$swapstart" "$swapend" || { echo "Failed to create swap partition."; exit 1; }
+        echo "Success."
+
+        rootstart=$((rootstart + swapsize))
+    fi
+
+    if [ "$rootyn" = "y" ]; then
+        echo "Creating root partition... (100%)"
+        parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
+        echo "Success."
+    else 
+        echo "Creating root partition ($rootsize)..."
+        rootend=$((rootstart + rootsize))
+        parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
+        echo "Success."
+    fi
+
+    echo "Successfully created UEFI, root and swap partition."
+
+    bash "$BASH_SCRIPTS_DIR/formatscript" || { echo "install_base failed"; exit 1; }
 else 
-    echo "Creating root partition ($rootsize)..."
-    rootend=$((rootstart + rootsize))
-    parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
+    echo "Creating partition table..."
+    parted -s "$TARGET_DISK" mklabel mbr || { echo "Faild to create partition table"; exit 1; }
     echo "Success."
+
+    rootstart=1
+
+    if [ "$swapyn" = "y" ]; then
+        echo "Creating Swap Partition ($swapsize)..."
+        swapstart="${rootstart}MiB"
+        swapend="$((rootstart + swapsize))MiB"
+        parted -s "$TARGET_DISK" mkpart primary linux-swap "$swapstart" "$swapend" || { echo "Failed to create swap partition."; exit 1; }
+        echo "Success."
+
+        rootstart=$((rootstart + swapsize))
+    fi
+
+    if [ "$rootyn" = "y" ]; then
+        echo "Creating root partition... (100%)"
+        parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" 100% || { echo "Failed to create root partition."; exit 1; }
+        echo "Success."
+    else 
+        echo "Creating root partition ($rootsize)..."
+        rootend=$((rootstart + rootsize))
+        parted -s "$TARGET_DISK" mkpart primary ext4 "${rootstart}MiB" "${rootend}MiB" || { echo "Failed to create root partition."; exit 1; }
+        echo "Success."
+    fi
+
+    echo "Successfully created UEFI, root and swap partition."
+
+    bash "$BASH_SCRIPTS_DIR/formatscript" || { echo "install_base failed"; exit 1; }
+
 fi
-
-echo "Successfully created UEFI, root and swap partition."
-
-bash "$BASH_SCRIPTS_DIR/formatscript" || { echo "install_base failed"; exit 1; }
-
 

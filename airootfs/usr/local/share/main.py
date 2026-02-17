@@ -34,6 +34,7 @@ dev = False
 gaming = False
 template = False
 useryn = False
+uefi = True
 
 
 
@@ -161,13 +162,15 @@ def toggle_swap(enabled: bool):
     window.spinSwap.setEnabled(enabled)
 
 def check_uefi():
+    global uefi
     try:
         if os.path.exists("/sys/firmware/efi/"):
             print("UEFI detected")
+            uefi = True
             next_clicked()
         else:
             print("Legacy BIOS detected")
-            window.stackedWidget.setCurrentIndex(12)
+            uefi = False
     except Exception as e:
         print(f"Error checking BIOS mode: {e}")
         return None
@@ -189,6 +192,7 @@ def savedisk():
         swapyn = "y" if swap_enabled else "n"
         root_enabled = window.rootCheck.isChecked()
         rootyn = "y" if root_enabled else "n"
+        uefiyn = "y" if uefi else "n"
         vars_path = os.path.join(base_dir, "disk.sh")
 
         try:
@@ -198,7 +202,8 @@ def savedisk():
                 f.write(f'swapyn="{swapyn}"\n')
                 f.write(f'rootyn="{rootyn}"\n')
                 f.write(f'swapsize="{swap_size}"\n')
-                f.write("export TARGET_DISK rootsize swapyn swapsize rootyn\n")
+                f.write(f'uefi="{uefiyn}"\n')
+                f.write("export TARGET_DISK rootsize swapyn swapsize rootyn uefiyn\n")
                 
             bash_dir = os.path.join(base_dir, "bash")
             partition_script = os.path.join(bash_dir, "partitionscript")

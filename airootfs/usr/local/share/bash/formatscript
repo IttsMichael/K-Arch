@@ -21,26 +21,39 @@ else
     PART_SEP=""
 fi
 
-BOOT_PART="${DISK}${PART_SEP}1"
 
-if [[ "$swapyn" == "y" ]]; then
-    SWAP_PART="${DISK}${PART_SEP}2"
-    ROOT_PART="${DISK}${PART_SEP}3"
+if [ "$uefiyn" == "y" ]; then
+    BOOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
+
+    if [[ "$swapyn" == "y" ]]; then
+        SWAP_PART="${DISK}${PART_SEP}2" || { echo "Failed to define swap partition"; exit 1; } 
+        ROOT_PART="${DISK}${PART_SEP}3" || { echo "Failed to define root partition"; exit 1; } 
+    else
+        ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+    fi
 else
-    ROOT_PART="${DISK}${PART_SEP}2"
+    if [[ "$swapyn" == "y" ]]; then
+        SWAP_PART="${DISK}${PART_SEP}1" || { echo "Failed to define swap partition"; exit 1; } 
+        ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define boot partition"; exit 1; } 
+    else
+        ROOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
+    fi
 fi
 
+echo "Formating partitions..."
 
 # Format partitions
+if [ "$uefiyn" == "y" ]; then
+    mkfs.fat -F 32 "$BOOT_PART"  || { echo "Failed to format boot partition"; exit 1; } 
+fi
 
 if [ "$swapyn" == "y" ]; then
     mkswap "$SWAP_PART" || { echo "Failed to format swap partition"; exit 1; } 
 fi
 
-echo "Formating partitions..."
-mkfs.fat -F 32 "$BOOT_PART"  || { echo "Failed to format boot partition"; exit 1; } 
+
+
 mkfs.ext4 -F "$ROOT_PART"  || { echo "Failed to format root partition"; exit 1; } 
 echo "Success."
 
 bash "$BASH_SCRIPTS_DIR/mountingscript" || { echo "install_base failed"; exit 1; }
-#tes

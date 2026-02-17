@@ -21,14 +21,23 @@ else
     PART_SEP=""
 fi
 
-BOOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
 
-if [ "$swapyn" == "y" ]; then
-    ROOT_PART="${DISK}${PART_SEP}3" || { echo "Failed to define root partition"; exit 1; } 
-    SWAP_PART="${DISK}${PART_SEP}2" || { echo "Failed to define swap partition"; exit 1; } 
-    echo "Success."
-else 
-    ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+if [ "$uefiyn" == "y" ]; then
+    BOOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define boot partition"; exit 1; } 
+
+    if [[ "$swapyn" == "y" ]]; then
+        SWAP_PART="${DISK}${PART_SEP}2" || { echo "Failed to define swap partition"; exit 1; } 
+        ROOT_PART="${DISK}${PART_SEP}3" || { echo "Failed to define root partition"; exit 1; } 
+    else
+        ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+    fi
+else
+    if [[ "$swapyn" == "y" ]]; then
+        SWAP_PART="${DISK}${PART_SEP}1" || { echo "Failed to define swap partition"; exit 1; } 
+        ROOT_PART="${DISK}${PART_SEP}2" || { echo "Failed to define root partition"; exit 1; } 
+    else
+        ROOT_PART="${DISK}${PART_SEP}1" || { echo "Failed to define root partition"; exit 1; } 
+    fi
 fi
 
 # Mount Root
@@ -36,11 +45,13 @@ echo "Mounting root..."
 mount "$ROOT_PART" /mnt
 echo "Success."
 
-# Mount Boot 
-echo "Mounting boot..."
-mkdir -p /mnt/boot
-mount "$BOOT_PART" /mnt/boot
-echo "Success."
+# Mount Boot
+if [ "$uefiyn" == "y" ]; then
+    echo "Mounting boot..."
+    mkdir -p /mnt/boot
+    mount "$BOOT_PART" /mnt/boot
+    echo "Success."
+fi
 
 # Enable Swap
 if [ "$swapyn" == "y" ]; then
