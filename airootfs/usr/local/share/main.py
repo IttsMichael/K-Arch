@@ -523,7 +523,7 @@ def page5():
     
     if "NVIDIA" in gpu_vendor:
         gpu_vendor = "An NVIDIA GPU"
-        gpu_command = "nvidia-dkms nvidia-utils lib32-nvidia-utils egl-wayland"
+        gpu_command = "nvidia-dkms nvidia-utils"
         window.labelGpu.setText(gpu_vendor + " was detected")
     elif "AMD" in gpu_vendor:
         gpu_vendor = "AMD Radeon"
