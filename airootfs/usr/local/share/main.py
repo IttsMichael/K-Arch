@@ -171,6 +171,7 @@ def check_uefi():
         else:
             print("Legacy BIOS detected")
             uefi = False
+            next_clicked()
     except Exception as e:
         print(f"Error checking BIOS mode: {e}")
         return None
