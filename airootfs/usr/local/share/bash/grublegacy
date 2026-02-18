@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+: "${BASE_DIR:=/usr/local/share}"
+: "${VARS_FILE:=$BASE_DIR/disk.sh}"
+: "${BASH_SCRIPTS_DIR:=$BASE_DIR/bash}"
+
+if [[ ! -f "$VARS_FILE" ]]; then
+  echo "Missing vars file: $VARS_FILE" >&2
+  exit 1
+fi
+source "$VARS_FILE"
+
+DISK="$TARGET_DISK"
+
+if pacman -S --noconfirm grub &> /dev/null; then
+    echo "Packages installed successfully."
+else
+    echo "Error: Pacman failed to install packages. Check your internet connection."
+    exit 1
+fi
+
+echo "Installing GRUB..."
+
+if grub-install --target=i386-pc $DISK; then
+    echo "GRUB installed successfully."
+else
+    echo "Error: GRUB failed to install."
+    exit 1
+fi
+
+echo "Generating Configuration.."
+
+if grub-mkconfig -o /boot/grub/grub.cfg &> /dev/null; then
+    echo "Config generated successfully."
+else 
+    echo "Error: Configuration failed to install."
+    exit 1
+fi

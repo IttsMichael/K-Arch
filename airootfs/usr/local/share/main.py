@@ -62,6 +62,7 @@ for device in json.loads(datadisk)["blockdevices"]:
 
 def install():
     global installing
+    global uefi
     installing = True
     window.installStatus.setText("Installing packages...")
     global drivers
@@ -76,7 +77,7 @@ def install():
     print("Starting base installation...")
     base_cmd = ["pacstrap", "-K", "/mnt", "base", "linux-cachyos", "linux-firmware", "linux-cachyos-headers", "base-devel",
     "networkmanager", "vim", "plasma-desktop", "sddm", "firefox", "konsole", "dolphin",
-    "fastfetch", "imagemagick", "karch-updater", "pacman-contrib", "libadwaita"]
+    "fastfetch", "imagemagick", "karch-updater", "pacman-contrib", "libadwaita", "intel-ucode", "amd-ucode"]
     full_command = base_cmd + drivers.split() + add.split()
     
     try:
@@ -117,9 +118,14 @@ def install():
         make_user()
         save_time()
         
-        window.installStatus.setText("Installing bootloader...")
-        print("Installing bootloader...")
-        subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/installgrub"], check=True)
+        if uefi == True:
+            window.installStatus.setText("Installing bootloader...")
+            print("Installing bootloader...")
+            subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/installgrub"], check=True)
+        else:
+            window.installStatus.setText("Installing bootloader...")
+            print("Installing bootloader...")
+            subprocess.run(["arch-chroot", "/mnt", "/usr/local/bin/grublegacy"], check=True)
 
         window.installStatus.setText("Enabling display manager...")
         print("enabling display manager")
