@@ -62,3 +62,4 @@ fi
 
 
 echo "Disk $DISK has been partitioned, formatted, and mounted to /mnt."
+

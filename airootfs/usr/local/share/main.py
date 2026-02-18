@@ -209,7 +209,7 @@ def savedisk():
                 f.write(f'swapyn="{swapyn}"\n')
                 f.write(f'rootyn="{rootyn}"\n')
                 f.write(f'swapsize="{swap_size}"\n')
-                f.write(f'uefi="{uefiyn}"\n')
+                f.write(f'uefiyn="{uefiyn}"\n')
                 f.write("export TARGET_DISK rootsize swapyn swapsize rootyn uefiyn\n")
                 
             bash_dir = os.path.join(base_dir, "bash")
