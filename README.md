@@ -1,3 +1,5 @@
+# This README is slightly outdated, refer to the website
+
 
 ## Download and Docs
 https://karch-linux.org
