@@ -1,4 +1,4 @@
-# This README is slightly outdated, refer to the website
+### This README is slightly outdated, refer to the website
 
 
 ## Download and Docs
