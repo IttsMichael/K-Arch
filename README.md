@@ -32,6 +32,7 @@ sudo mkarchiso -v .
 ```
 **That procces can take a while, especially on low end devices so you might want to download the ISO directly.**
 
+## Status
 
 ## Licensing & Acknowledgment 
 
