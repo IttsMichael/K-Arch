@@ -34,6 +34,8 @@ sudo mkarchiso -v .
 
 ## Status
 
+This Project is in early development, expect bugs and issues, don't let the appearance trick you.
+
 ## Licensing & Acknowledgment 
 
 Project Code
