@@ -36,6 +36,9 @@ sudo mkarchiso -v .
 
 This Project is in early development, expect bugs and issues, don't let the appearance trick you.
 
+## OpenRC edition
+IttsMichael/k-arch-openrc
+
 ## Licensing & Acknowledgment 
 
 Project Code
